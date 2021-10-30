@@ -1,7 +1,11 @@
 import { Fragment } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import tw, { styled } from "twin.macro";
 
+const Container = styled.main(tw`container min-h-screen`);
+const Header = styled.div(tw`flex flex-col h-screen w-screen justify-center`);
+const Title = styled.span(tw`text-4xl font-bold text-center`);
 const Home: NextPage = () => {
   return (
     <Fragment>
@@ -11,13 +15,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container min-h-screen ">
-        <div className="flex flex-col h-screen w-screen justify-center">
-          <span className="text-4xl font-bold text-center">
-            Welcome to POKEMON WORLD!
-          </span>
-        </div>
-      </main>
+      <Container>
+        <Header>
+          <Title>Welcome to POKEMON WORLD!</Title>
+        </Header>
+      </Container>
     </Fragment>
   );
 };

@@ -1,8 +1,16 @@
-import "tailwindcss/tailwind.css";
-import type { AppProps } from "next/app";
+import Head from "next/head";
+import { GlobalStyles } from "twin.macro";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+function App({ Component, pageProps }) {
+  return (
+    <>
+      <Head>
+        <title>Pokemon World</title>
+      </Head>
+      <GlobalStyles />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
-export default MyApp;
+export default App;
