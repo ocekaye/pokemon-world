@@ -1,13 +1,28 @@
 import { gql } from "@apollo/client";
+const limit = 20;
+
+type PokemonsResponse = {
+  data: PokemonsData;
+};
+
+type PokemonsData = {
+  pokemons: PokemonsType;
+};
+
+type PokemonsType = {
+  count: number;
+  results: PokemontItem[];
+};
+type PokemontItem = {
+  url: string;
+  name: string;
+  image: string;
+};
 
 const getPokemons = gql`
   query pokemons($limit: Int, $offset: Int) {
     pokemons(limit: $limit, offset: $offset) {
       count
-      next
-      previous
-      status
-      message
       results {
         url
         name
@@ -17,4 +32,4 @@ const getPokemons = gql`
   }
 `;
 
-export { getPokemons };
+export { getPokemons, limit, PokemonsType, PokemonsData, PokemonsResponse };
