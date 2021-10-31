@@ -6,10 +6,7 @@ import {
   gql,
 } from "@apollo/client";
 
-const client = new ApolloClient({
-  uri: "https://graphql-pokeapi.graphcdn.app",
-  cache: new InMemoryCache(),
-});
+import client from "~/client/client";
 
 const POKEMONS = gql`
   query pokemons($limit: Int, $offset: Int) {
