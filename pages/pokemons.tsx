@@ -6,10 +6,9 @@ import {
   gql,
 } from "@apollo/client";
 
-import client from "~/client";
 import { getPokemons } from "~/client/Pokemon";
 
-const Poke = () => {
+export default function Pokemons() {
   const { loading, error, data } = useQuery(getPokemons);
   if (loading) return <div>loading</div>;
 
@@ -21,13 +20,5 @@ const Poke = () => {
         <div key={d.name}>{d.name}</div>
       ))}
     </div>
-  );
-};
-
-export default function Pokemons() {
-  return (
-    <ApolloProvider client={client}>
-      <Poke />
-    </ApolloProvider>
   );
 }
