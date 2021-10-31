@@ -6,27 +6,11 @@ import {
   gql,
 } from "@apollo/client";
 
-import client from "~/client/client";
-
-const POKEMONS = gql`
-  query pokemons($limit: Int, $offset: Int) {
-    pokemons(limit: $limit, offset: $offset) {
-      count
-      next
-      previous
-      status
-      message
-      results {
-        url
-        name
-        image
-      }
-    }
-  }
-`;
+import client from "~/client";
+import { getPokemons } from "~/client/Pokemon";
 
 const Poke = () => {
-  const { loading, error, data } = useQuery(POKEMONS);
+  const { loading, error, data } = useQuery(getPokemons);
   if (loading) return <div>loading</div>;
 
   if (error) return <div>error</div>;
