@@ -5,6 +5,7 @@ import CardTitle from "~/components/Card/CardTitle";
 import CardBackground from "~/components/Card/CardBgSpecies";
 import CardAvatar from "~/components/Card/PokemonCardAvatar";
 import PokemonIconType from "~/components/Card/PokemonIconType";
+import HealthPoint from "~/components/Card/HealthPoint";
 
 export {
   Card,
@@ -14,4 +15,5 @@ export {
   CardBackground,
   CardAvatar,
   PokemonIconType,
+  HealthPoint,
 };

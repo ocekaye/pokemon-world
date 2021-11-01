@@ -8,7 +8,8 @@ rounded-full
 shadow-md
 w-full
 aspect-w-6
-aspect-h-3    
+aspect-h-3
+mt-2
 `}
   ${({ half }) => half && tw`w-1/2`}
 `;

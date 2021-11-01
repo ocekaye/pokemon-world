@@ -17,6 +17,7 @@ import {
   CardBackground,
   CardAvatar,
   PokemonIconType,
+  HealthPoint,
 } from "~/components/Card";
 
 interface PokemonItemProps {
@@ -42,6 +43,7 @@ export default function PokemonItem(props: PokemonItemProps) {
       />
       <CardContent>
         <CardTitle>{upperFirst(props.pokemon.name)}</CardTitle>
+        <HealthPoint />
         <CardAvatar imageUrl={props.pokemon.dreamworld} half />
         <CardContentType>
           {loading ? (
