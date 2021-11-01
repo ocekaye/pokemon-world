@@ -12,6 +12,7 @@ import client from "~/client";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 import PokemonItem from "~/components/PokemonItem";
+import Modal from "~/components/modals";
 
 interface PokemonsProp {
   pokemons: PokeItem[];
@@ -33,6 +34,7 @@ export default function Pokemons(props: PokemonsProp) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(props.page || 0);
   const [pokemons, setPokemons] = useState(props.pokemons || []);
+  const [open, setOpen] = useState(false);
   const [getData, { loading, error, data }] = useLazyQuery(getPokemons, {
     variables: { offset: currentPage * limit, limit },
   });
@@ -56,6 +58,10 @@ export default function Pokemons(props: PokemonsProp) {
     if (data) setPokemons((prevPokemons) => data.pokemons?.results || []);
   }, [data]);
 
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <GridContainter>
@@ -74,6 +80,20 @@ export default function Pokemons(props: PokemonsProp) {
           load more
         </div>
       )}
+      <div>
+        <button
+          onClick={() => {
+            console.log("open");
+
+            setOpen(true);
+          }}
+        >
+          Open Modal
+        </button>
+      </div>
+      <Modal open={open} onClose={onClose}>
+        <div>asdasd</div>
+      </Modal>
     </div>
   );
 }
