@@ -21,11 +21,11 @@ import Fairy from "~/components/CardBgSpecies/Fairy";
 import Unknown from "~/components/CardBgSpecies/Unknown";
 import Shadow from "~/components/CardBgSpecies/Shadow";
 interface BackgroundSpeciesProps {
-  species: PokemonType;
+  type: PokemonType;
 }
 
 export default function CardBackgroundSpecies(props: BackgroundSpeciesProps) {
-  switch (props.species) {
+  switch (props.type) {
     case PokemonTypes.flying:
       return <Flying />;
     case PokemonTypes.fighting:

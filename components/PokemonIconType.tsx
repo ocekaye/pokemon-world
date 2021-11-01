@@ -78,7 +78,7 @@ const witchIcon = (value: PokemonTypes): WitchIconRe => {
 };
 
 const Icon = styled.div(tw`
-    bg-gray-600 bg-opacity-50 rounded-full p-2
+    bg-gray-600  rounded-full p-2
     `);
 
 interface PokemonIconTypeProps {

@@ -1,10 +1,17 @@
-import { PokemonItem as PokeItem } from "~/client/Pokemon";
+import { useEffect } from "react";
+import {
+  PokemonItem as PokeItem,
+  getPokemonByName,
+  PokemonDetailData,
+} from "~/client/Pokemon";
+import { useQuery } from "@apollo/client";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 import Background from "~/components/CardBgSpecies";
 import PokemonCardAvatar from "~/components/PokemonCardAvatar";
 import PokemonIconType from "~/components/PokemonIconType";
 import { upperFirst } from "lodash";
+
 const PokemonItemStyled = styled.div(tw`
     aspect-h-6
     aspect-w-4
@@ -34,19 +41,38 @@ interface PokemonItemProps {
 }
 export default function PokemonItem(props: PokemonItemProps) {
   const iconTypeSize = "16px";
+  const { loading, error, data } = useQuery<PokemonDetailData, any>(
+    getPokemonByName,
+    {
+      variables: { name: props.pokemon.name },
+    }
+  );
+
   return (
     <PokemonItemStyled>
-      <Background />
+      <Background
+        type={
+          !loading && data?.pokemon?.types?.length > 0
+            ? data?.pokemon.types[0].type.name
+            : null
+        }
+      />
       <Contents>
         <Title>{upperFirst(props.pokemon.name)}</Title>
         <PokemonCardAvatar imageUrl={props.pokemon.dreamworld} half />
         <TypeIconList>
-          <PokemonIconType type="water" iconProps={{ size: iconTypeSize }} />
-          <PokemonIconType type="fairy" iconProps={{ size: iconTypeSize }} />
-          <PokemonIconType type="unknown" iconProps={{ size: iconTypeSize }} />
-          <PokemonIconType type="shadow" iconProps={{ size: iconTypeSize }} />
-          <PokemonIconType type="dragon" iconProps={{ size: iconTypeSize }} />
-          <PokemonIconType type="dark" iconProps={{ size: iconTypeSize }} />
+          {loading ? (
+            <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
+          ) : data?.pokemon?.types?.length > 0 ? (
+            data?.pokemon.types.map((poke) => (
+              <PokemonIconType
+                type={poke.type.name}
+                iconProps={{ size: iconTypeSize }}
+              />
+            ))
+          ) : (
+            <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
+          )}
         </TypeIconList>
       </Contents>
     </PokemonItemStyled>

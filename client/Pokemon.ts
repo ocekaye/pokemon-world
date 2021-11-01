@@ -20,6 +20,49 @@ type PokemonItem = {
   dreamworld: string;
 };
 
+type PokemonDetailResponse = {
+  data: PokemonDetailData;
+};
+
+type PokemonDetailData = {
+  pokemon: PokemonDetailItem;
+};
+
+type PokemonDetailItem = {
+  id: number;
+  name: string;
+  weight: number;
+  height: number;
+  types: PokemonDetailTypes[];
+  abilities: PokemonDetailAbilities[];
+  stats: PokemonDetailStats[];
+};
+
+type PokemonDetailTypes = {
+  type: PokemonDetailType;
+};
+
+type PokemonDetailType = {
+  name: string;
+};
+
+type PokemonDetailAbilities = {
+  ability: PokemonDetailAbilitiy;
+};
+
+type PokemonDetailAbilitiy = {
+  name: string;
+};
+
+type PokemonDetailStats = {
+  base_stat: number;
+  stat: PokemonDetailStat;
+};
+
+type PokemonDetailStat = {
+  name: string;
+};
+
 enum PokemonTypes {
   normal = "normal",
   fighting = "fighting",
@@ -57,12 +100,41 @@ const getPokemons = gql`
   }
 `;
 
+const getPokemonByName = gql`
+  query pokemon($name: String!) {
+    pokemon(name: $name) {
+      id
+      name
+      types {
+        type {
+          name
+        }
+      }
+      abilities {
+        ability {
+          name
+        }
+      }
+      stats {
+        base_stat
+        stat {
+          name
+        }
+      }
+      weight
+      height
+    }
+  }
+`;
+
 export {
   getPokemons,
+  getPokemonByName,
   limit,
   PokemonsType,
   PokemonsData,
   PokemonsResponse,
   PokemonItem,
   PokemonTypes,
+  PokemonDetailData,
 };
