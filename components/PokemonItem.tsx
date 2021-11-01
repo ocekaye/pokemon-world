@@ -24,6 +24,7 @@ import {
   CardAvatar,
   PokemonIconType,
   HealthPoint,
+  CardStats,
 } from "~/components/Card";
 
 interface PokemonItemProps {
@@ -31,7 +32,7 @@ interface PokemonItemProps {
 }
 export default function PokemonItem(props: PokemonItemProps) {
   const iconTypeSize = "16px";
-  const [stats, setStat] = useState<StatsObject>({
+  const [stats, setStats] = useState<StatsObject>({
     hp: 0,
     attack: 0,
     defense: 0,
@@ -47,7 +48,7 @@ export default function PokemonItem(props: PokemonItemProps) {
   useEffect(() => {
     if (data) {
       const statusObject = createStatusObject(data.pokemon.stats);
-      setStat(statusObject);
+      setStats(statusObject);
     }
   }, [data]);
 
@@ -79,6 +80,7 @@ export default function PokemonItem(props: PokemonItemProps) {
             <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
           )}
         </CardContentType>
+        <CardStats stats={stats} />
       </CardContent>
     </Card>
   );

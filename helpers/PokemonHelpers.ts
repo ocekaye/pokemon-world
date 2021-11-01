@@ -23,9 +23,9 @@ const getStatsValue = (
 
 const createStatusObject = (stats: PokemonDetailStats[] = []): StatsObject => {
   const hp = getStatsValue(stats, STATUS.HP);
-  const attack = getStatsValue(stats, STATUS.attack);
-  const defense = getStatsValue(stats, STATUS.defense);
-  const speed = getStatsValue(stats, STATUS.speed);
+  const attack = getStatsValue(stats, STATUS.ATTACK);
+  const defense = getStatsValue(stats, STATUS.DEFENCE);
+  const speed = getStatsValue(stats, STATUS.SPEED);
   return {
     hp,
     attack,
