@@ -138,4 +138,5 @@ export {
   PokemonTypes,
   PokemonDetailData,
   PokemonDetailStats,
+  PokemonDetailAbilities,
 };

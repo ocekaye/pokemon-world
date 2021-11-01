@@ -5,9 +5,6 @@ import {
   PokemonDetailData,
 } from "~/client/Pokemon";
 import { useQuery } from "@apollo/client";
-import tw from "twin.macro";
-import styled from "@emotion/styled";
-import Background from "~/components/Card/CardBgSpecies";
 import { upperFirst } from "lodash";
 import {
   getStatsValue,
@@ -25,6 +22,8 @@ import {
   PokemonIconType,
   HealthPoint,
   CardStats,
+  CardAbility,
+  CardPokemonButton,
 } from "~/components/Card";
 
 interface PokemonItemProps {
@@ -85,6 +84,8 @@ export default function PokemonItem(props: PokemonItemProps) {
           height={data?.pokemon?.height || 0}
           weight={data?.pokemon?.weight || 0}
         />
+        <CardAbility abilities={data?.pokemon?.abilities} />
+        <CardPokemonButton />
       </CardContent>
     </Card>
   );

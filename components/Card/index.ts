@@ -7,6 +7,8 @@ import CardAvatar from "~/components/Card/PokemonCardAvatar";
 import PokemonIconType from "~/components/Card/PokemonIconType";
 import HealthPoint from "~/components/Card/HealthPoint";
 import CardStats from "~/components/Card/CardStats";
+import CardAbility from "~/components/Card/CardAbility";
+import CardPokemonButton from "~/components/Card/CardPokemonButton";
 
 export {
   Card,
@@ -18,4 +20,6 @@ export {
   PokemonIconType,
   HealthPoint,
   CardStats,
+  CardAbility,
+  CardPokemonButton,
 };

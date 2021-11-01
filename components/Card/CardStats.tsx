@@ -15,7 +15,7 @@ interface CarsStatsProps {
 }
 
 const CardStatsContainer = styled.div(
-  tw`flex flex-wrap items-center justify-center gap-2`
+  tw`flex flex-wrap items-center justify-center gap-2 px-1`
 );
 const StatItem = styled.div(
   tw`flex items-center gap-0.5 rounded-md px-1 py-0.5 bg-gray-800`
