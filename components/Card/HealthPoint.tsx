@@ -11,8 +11,8 @@ const HealtBarContainer = styled.div(tw`
 `);
 
 interface HealtBarProps {
-  curentHealth: number;
-  maxHealth: number;
+  curentHealth?: number;
+  maxHealth?: number;
 }
 const HealtBarCurrent = styled.div<HealtBarProps>`
   ${tw`bg-gradient-to-r from-green-800 via-green-600 to-green-600 h-full`}
@@ -25,13 +25,15 @@ const HealthText = styled.span`
   font-size: 0.65rem;
 `;
 
-export default function () {
+export default function HP(props: HealtBarProps) {
   return (
     <HealthPoint>
       <HeartIcon size="16px" color="#F00" />
       <HealtBarContainer>
-        <HealtBarCurrent curentHealth={100} maxHealth={100} />
-        <HealthText>100/100</HealthText>
+        <HealtBarCurrent {...props} />
+        <HealthText>{`${props.maxHealth || 0} / ${
+          props.curentHealth || 0
+        }`}</HealthText>
       </HealtBarContainer>
     </HealthPoint>
   );

@@ -137,4 +137,5 @@ export {
   PokemonItem,
   PokemonTypes,
   PokemonDetailData,
+  PokemonDetailStats,
 };
