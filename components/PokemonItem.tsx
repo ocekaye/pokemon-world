@@ -7,34 +7,17 @@ import {
 import { useQuery } from "@apollo/client";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
-import Background from "~/components/CardBgSpecies";
-import PokemonCardAvatar from "~/components/PokemonCardAvatar";
-import PokemonIconType from "~/components/PokemonIconType";
+import Background from "~/components/Card/CardBgSpecies";
 import { upperFirst } from "lodash";
-
-const PokemonItemStyled = styled.div(tw`
-    aspect-h-6
-    aspect-w-4
-    rounded-xl
-    shadow-md
-    overflow-hidden
-`);
-
-const Title = styled.div(tw`
-    font-bold text-lg text-gray-50 px-3 self-start mb-3
-`);
-
-const Contents = styled.div(tw`
-flex flex-col items-center
-`);
-
-const TypeIconList = styled.div(tw`
-  flex gap-0.5 p-1
-`);
-
-const TypeIcon = styled.img(
-  tw`h-3 w-3 fill-current stroke-current text-red-500 `
-);
+import {
+  Card,
+  CardContent,
+  CardContentType,
+  CardTitle,
+  CardBackground,
+  CardAvatar,
+  PokemonIconType,
+} from "~/components/Card";
 
 interface PokemonItemProps {
   pokemon: PokeItem;
@@ -49,18 +32,18 @@ export default function PokemonItem(props: PokemonItemProps) {
   );
 
   return (
-    <PokemonItemStyled>
-      <Background
+    <Card>
+      <CardBackground
         type={
           !loading && data?.pokemon?.types?.length > 0
             ? data?.pokemon.types[0].type.name
             : null
         }
       />
-      <Contents>
-        <Title>{upperFirst(props.pokemon.name)}</Title>
-        <PokemonCardAvatar imageUrl={props.pokemon.dreamworld} half />
-        <TypeIconList>
+      <CardContent>
+        <CardTitle>{upperFirst(props.pokemon.name)}</CardTitle>
+        <CardAvatar imageUrl={props.pokemon.dreamworld} half />
+        <CardContentType>
           {loading ? (
             <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
           ) : data?.pokemon?.types?.length > 0 ? (
@@ -73,8 +56,8 @@ export default function PokemonItem(props: PokemonItemProps) {
           ) : (
             <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
           )}
-        </TypeIconList>
-      </Contents>
-    </PokemonItemStyled>
+        </CardContentType>
+      </CardContent>
+    </Card>
   );
 }
