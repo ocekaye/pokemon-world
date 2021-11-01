@@ -7,7 +7,7 @@ const PokeContainer = styled.div`
 `;
 
 const PokeButton = styled.div(tw`
-    cursor-pointer self-end place-self-end justify-self-end
+    cursor-pointer self-end place-self-end justify-self-end transition duration-200 hover:scale-110
 `);
 
 export default function CardPokemonButton() {

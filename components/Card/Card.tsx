@@ -6,5 +6,8 @@ const PokemonItemStyled = styled.div(tw`
     rounded-xl
     shadow-md
     overflow-hidden
+    md:transition
+    md:duration-200
+    md:hover:shadow-2xl
 `);
 export default PokemonItemStyled;
