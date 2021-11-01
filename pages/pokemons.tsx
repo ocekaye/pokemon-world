@@ -43,6 +43,7 @@ export default function Pokemons(props: PokemonsProp) {
     const newPage = currentPage + 1;
     router.push(`/pokemons/?page=${newPage}`, `/pokemons/?page=${newPage}`, {
       shallow: true,
+      scroll: true,
     });
   };
 
@@ -77,7 +78,7 @@ export default function Pokemons(props: PokemonsProp) {
             goNextPage();
           }}
         >
-          load more
+          Next
         </div>
       )}
       <div>

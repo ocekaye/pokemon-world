@@ -59,9 +59,9 @@ export default function CardBackgroundSpecies(props: BackgroundSpeciesProps) {
     case PokemonTypes.dragon:
       return <Dragon />;
     case PokemonTypes.dark:
-      <Dark />;
+      return <Dark />;
     case PokemonTypes.fairy:
-      <Fairy />;
+      return <Fairy />;
     case PokemonTypes.unknown:
       return <Unknown />;
     case PokemonTypes.shadow:
