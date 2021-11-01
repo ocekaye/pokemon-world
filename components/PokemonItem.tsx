@@ -80,7 +80,11 @@ export default function PokemonItem(props: PokemonItemProps) {
             <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
           )}
         </CardContentType>
-        <CardStats stats={stats} />
+        <CardStats
+          stats={stats}
+          height={data?.pokemon?.height || 0}
+          weight={data?.pokemon?.weight || 0}
+        />
       </CardContent>
     </Card>
   );
