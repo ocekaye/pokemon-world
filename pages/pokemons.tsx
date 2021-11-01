@@ -2,28 +2,40 @@ import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { gql, useLazyQuery } from "@apollo/client";
-
 import {
   getPokemons,
   limit,
   PokemonsResponse,
-  PokemontItem,
+  PokemonItem as PokeItem,
 } from "~/client/Pokemon";
 import client from "~/client";
+import tw from "twin.macro";
+import styled from "@emotion/styled";
+import PokemonItem from "~/components/PokemonItem";
 
 interface PokemonsProp {
-  pokemons: PokemontItem[];
+  pokemons: PokeItem[];
   count: number;
   page: number | null;
 }
+
+const GridContainter = styled.div(
+  tw`
+  grid grid-cols-2 
+  gap-2
+  px-2 pt-2
+  sm:grid-cols-3 sm:gap-2 sm:px-3 sm:pt-3
+  md:grid-cols-4 md:gap-3 md:px-4 md:pt-4
+  lg:grid-cols-5 lg:gap-4
+  xl:grid-cols-6`
+);
 export default function Pokemons(props: PokemonsProp) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(props.page || 0);
   const [pokemons, setPokemons] = useState(props.pokemons || []);
-  const [getData, { loading, error, called, data }] = useLazyQuery(
-    getPokemons,
-    { variables: { offset: currentPage * limit, limit } }
-  );
+  const [getData, { loading, error, data }] = useLazyQuery(getPokemons, {
+    variables: { offset: currentPage * limit, limit },
+  });
 
   const goNextPage = () => {
     const newPage = currentPage + 1;
@@ -46,9 +58,11 @@ export default function Pokemons(props: PokemonsProp) {
 
   return (
     <div>
-      {pokemons.map((d) => (
-        <div key={d.name}>{d.name}</div>
-      ))}
+      <GridContainter>
+        {pokemons.map((d) => (
+          <PokemonItem key={d.name} pokemon={d} />
+        ))}
+      </GridContainter>
       {loading ? (
         <div>Loading..</div>
       ) : (
