@@ -1,34 +1,34 @@
 import { gql } from "@apollo/client";
 const limit = 20;
 
-type PokemonsResponse = {
+interface PokemonsResponse {
   data: PokemonsData;
-};
+}
 
-type PokemonsData = {
+interface PokemonsData {
   pokemons: PokemonsType;
-};
+}
 
-type PokemonsType = {
+interface PokemonsType {
   count: number;
   results: PokemonItem[];
-};
-type PokemonItem = {
+}
+interface PokemonItem {
   url: string;
   name: string;
   image: string;
   dreamworld: string;
-};
+}
 
-type PokemonDetailResponse = {
+interface PokemonDetailResponse {
   data: PokemonDetailData;
-};
+}
 
-type PokemonDetailData = {
+interface PokemonDetailData {
   pokemon: PokemonDetailItem;
-};
+}
 
-type PokemonDetailItem = {
+interface PokemonDetailItem {
   id: number;
   name: string;
   weight: number;
@@ -36,32 +36,32 @@ type PokemonDetailItem = {
   types: PokemonDetailTypes[];
   abilities: PokemonDetailAbilities[];
   stats: PokemonDetailStats[];
-};
+}
 
-type PokemonDetailTypes = {
-  type: PokemonDetailType;
-};
+interface PokemonDetailTypes {
+  interface: PokemonDetailType;
+}
 
-type PokemonDetailType = {
+interface PokemonDetailType {
   name: string;
-};
+}
 
-type PokemonDetailAbilities = {
+interface PokemonDetailAbilities {
   ability: PokemonDetailAbilitiy;
-};
+}
 
-type PokemonDetailAbilitiy = {
+interface PokemonDetailAbilitiy {
   name: string;
-};
+}
 
-type PokemonDetailStats = {
+interface PokemonDetailStats {
   base_stat: number;
   stat: PokemonDetailStat;
-};
+}
 
-type PokemonDetailStat = {
+interface PokemonDetailStat {
   name: string;
-};
+}
 
 enum PokemonTypes {
   normal = "normal",
@@ -139,4 +139,5 @@ export {
   PokemonDetailData,
   PokemonDetailStats,
   PokemonDetailAbilities,
+  PokemonDetailItem,
 };

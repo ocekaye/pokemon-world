@@ -25,6 +25,7 @@ import {
   CardAbility,
   CardPokemonButton,
 } from "~/components/Card";
+import { MyPokemon } from "~/Db";
 
 interface PokemonItemProps {
   pokemon: PokeItem;
@@ -50,6 +51,17 @@ export default function PokemonItem(props: PokemonItemProps) {
       setStats(statusObject);
     }
   }, [data]);
+
+  const save = () => {
+    if (!data?.pokemon) return;
+    console.log("save");
+    const a = MyPokemon.fromPokemon(
+      "POKEMONKUUU" + Math.random() * 10000,
+      props.pokemon.dreamworld,
+      data.pokemon
+    );
+    a.save();
+  };
 
   return (
     <Card>
@@ -85,7 +97,7 @@ export default function PokemonItem(props: PokemonItemProps) {
           weight={data?.pokemon?.weight || 0}
         />
         <CardAbility abilities={data?.pokemon?.abilities} />
-        <CardPokemonButton />
+        <CardPokemonButton save={save} />
       </CardContent>
     </Card>
   );

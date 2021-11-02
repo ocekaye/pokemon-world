@@ -10,10 +10,13 @@ const PokeButton = styled.div(tw`
     cursor-pointer self-end place-self-end justify-self-end transition duration-200 hover:scale-110
 `);
 
-export default function CardPokemonButton() {
+interface PokeButtonProps {
+  save?: Function;
+}
+export default function CardPokemonButton(props: PokeButtonProps) {
   return (
     <PokeContainer>
-      <PokeButton>
+      <PokeButton onClick={props.save}>
         <PokemonIcon size="50px" />
       </PokeButton>
     </PokeContainer>
