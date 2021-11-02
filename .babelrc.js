@@ -10,5 +10,15 @@ module.exports = {
       },
     ],
   ],
-  plugins: ["@emotion/babel-plugin", "babel-plugin-macros"],
+  plugins: [
+    "@emotion/babel-plugin",
+    "babel-plugin-macros",
+    [
+      "babel-plugin-styled-components",
+      {
+        ssr: true,
+        displayName: true,
+      },
+    ],
+  ],
 };
