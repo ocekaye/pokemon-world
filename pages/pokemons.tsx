@@ -40,8 +40,18 @@ export default function Pokemons(props: PokemonsProp) {
     variables: { offset: currentPage * limit, limit },
   });
 
+
   const goNextPage = () => {
     const newPage = currentPage + 1;
+    changeUrl(newPage);
+  };
+
+  const goPrevPage = () => {
+    const newPage = currentPage - 1;
+    changeUrl(newPage);
+  };
+
+  const changeUrl = (newPage: number) => {
     router.push(`/pokemons/?page=${newPage}`, `/pokemons/?page=${newPage}`, {
       shallow: true,
       scroll: true,
@@ -74,13 +84,22 @@ export default function Pokemons(props: PokemonsProp) {
       {loading ? (
         <div>Loading..</div>
       ) : (
-        <div
-          onClick={() => {
-            goNextPage();
-          }}
-        >
-          Next
-        </div>
+        <>
+          <div
+            onClick={() => {
+              goPrevPage();
+            }}
+          >
+            Previous
+          </div>
+          <div
+            onClick={() => {
+              goNextPage();
+            }}
+          >
+            Next
+          </div>
+        </>
       )}
       <BackpackButton url="/backpack" />
       <div>
