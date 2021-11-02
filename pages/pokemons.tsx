@@ -13,6 +13,7 @@ import tw from "twin.macro";
 import styled from "@emotion/styled";
 import PokemonItem from "~/components/PokemonItem";
 import Modal from "~/components/modals";
+import BackpackButton from "~/components/buttons/BackpackButton";
 
 interface PokemonsProp {
   pokemons: PokeItem[];
@@ -81,6 +82,7 @@ export default function Pokemons(props: PokemonsProp) {
           Next
         </div>
       )}
+      <BackpackButton url="/backpack" />
       <div>
         <button
           onClick={() => {
