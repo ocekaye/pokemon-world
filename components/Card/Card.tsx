@@ -1,7 +1,9 @@
+import { FC } from "react";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 
-const PokemonItemStyled = styled.div(tw`
+const PokemonItemStyled = styled.div`
+  ${tw`
 flex
 relative
 rounded-xl
@@ -12,8 +14,19 @@ duration-300
 md:hover:shadow-2xl
 hover:rotate-0
 hover:z-10
-transform`);
+transform`}
+  ${({ canClick }) => canClick && tw`cursor-pointer`}
+`;
 
-export default function Card(props) {
-  return <PokemonItemStyled>{props.children}</PokemonItemStyled>;
+interface CardProps {
+  onCardClick?: Function;
 }
+const Card: FC<CardProps> = ({ children, onCardClick }) => {
+  return (
+    <PokemonItemStyled onClick={onCardClick} canClick={!!onCardClick}>
+      {children}
+    </PokemonItemStyled>
+  );
+};
+
+export default Card;

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import PokemonIcon from "~/icons/PokemonIcon";
 
 const PokeContainer = styled.div`
-  ${tw`flex flex-1 flex-col justify-end py-2`}
+  ${tw`flex flex-1 flex-col justify-end pt-2`}
 `;
 
 const PokeButton = styled.div(tw`

@@ -14,7 +14,6 @@ import styled from "@emotion/styled";
 import PokemonItem from "~/components/PokemonItem";
 import Modal from "~/components/modals";
 import BackpackButton from "~/components/buttons/BackpackButton";
-import { MyPokemon, IPokemon } from "~/Db";
 
 interface PokemonsProp {
   pokemons: PokeItem[];
@@ -40,8 +39,6 @@ export default function Pokemons(props: PokemonsProp) {
   const [getData, { loading, error, data }] = useLazyQuery(getPokemons, {
     variables: { offset: currentPage * limit, limit },
   });
-
-  const [localPoke, setLocalPoke] = useState<IPokemon[]>([]);
 
   const goNextPage = () => {
     const newPage = currentPage + 1;
@@ -74,11 +71,6 @@ export default function Pokemons(props: PokemonsProp) {
 
   const onClose = () => {
     setOpen(false);
-  };
-
-  const getMyPokemons = async () => {
-    const a = await MyPokemon.getAll();
-    setLocalPoke(a);
   };
 
   return (
@@ -119,11 +111,8 @@ export default function Pokemons(props: PokemonsProp) {
         >
           Open Modal
         </button>
-        <button onClick={getMyPokemons}>get My Pokemons</button>
       </div>
-      {localPoke.map((val) => (
-        <div>{JSON.stringify(val, null, 3)}</div>
-      ))}
+
       <Modal open={open} onClose={onClose}>
         <div>asdasd</div>
       </Modal>

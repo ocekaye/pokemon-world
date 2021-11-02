@@ -1,4 +1,5 @@
 import { IPokemon, db } from "~/Db";
+import { StatsObject } from "~/helpers/PokemonHelpers";
 import {
   PokemonDetailItem,
   PokemonDetailTypes,
@@ -14,7 +15,7 @@ export default class MyPokemon implements IPokemon {
   height: number;
   types: PokemonDetailTypes[];
   abilities: PokemonDetailAbilities[];
-  stats: PokemonDetailStats[];
+  stats: StatsObject[];
   constructor(
     pokeName: string,
     dreamworld: string,
@@ -24,7 +25,7 @@ export default class MyPokemon implements IPokemon {
     height: string,
     types: PokemonDetailTypes[],
     abilities: PokemonDetailAbilities[],
-    stats: PokemonDetailStats[]
+    stats: StatsObject[]
   ) {
     this.pokeName = pokeName;
     this.dreamworld = dreamworld;
@@ -40,7 +41,8 @@ export default class MyPokemon implements IPokemon {
   static fromPokemon(
     pokeName: string,
     dreamworld: string,
-    pokemon: PokemonDetailItem
+    pokemon: PokemonDetailItem,
+    stats: StatsObject[]
   ): MyPokemon {
     return new MyPokemon(
       pokeName,
@@ -51,7 +53,7 @@ export default class MyPokemon implements IPokemon {
       pokemon.height,
       pokemon.types,
       pokemon.abilities,
-      pokemon.stats
+      stats
     );
   }
 
