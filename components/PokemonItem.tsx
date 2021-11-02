@@ -28,6 +28,7 @@ import {
   CardPokemonButton,
 } from "~/components/Card";
 import { MyPokemon, IPokemon } from "~/Db";
+import { useRouter } from "next/router";
 
 interface PokemonItemProps {
   pokemon?: PokeItem;
@@ -36,6 +37,7 @@ interface PokemonItemProps {
 }
 export default function PokemonItem(props: PokemonItemProps) {
   const iconTypeSize = "16px";
+  const router = useRouter();
   const [hasData, setUseData] = useState<Boolean>(!!props.pokemonData);
   const [stats, setStats] = useState<StatsObject>(
     props.pokemonData?.stats || {
@@ -74,9 +76,17 @@ export default function PokemonItem(props: PokemonItemProps) {
     return data?.pokemon?.types || props.pokemonData?.types || [];
   };
 
+  const getName = () => props.pokemon?.name || props.pokemonData?.name;
+
+  const onAvatarClick = () => {
+    router.push(`/pokemon/${getName()}`, `/pokemon/${getName()}`, {
+      scroll: true,
+    });
+  };
+
   const save = () => {
     if (!data?.pokemon) return;
-    console.log("save");
+
     const a = MyPokemon.fromPokemon(
       "POKEMONKUUU" + Math.random() * 10000,
       props.pokemon.dreamworld,
@@ -98,13 +108,12 @@ export default function PokemonItem(props: PokemonItemProps) {
         }
       />
       <CardContent>
-        <CardTitle>
-          {upperFirst(props.pokemon?.name || props.pokemonData?.name)}
-        </CardTitle>
+        <CardTitle>{upperFirst(getName())}</CardTitle>
         <HealthPoint maxHealth={stats.hp} curentHealth={stats.hp} />
         <CardAvatar
           imageUrl={props.pokemon?.dreamworld || props.pokemonData?.dreamworld}
           half
+          onAvatarClick={onAvatarClick}
         />
         <CardContentType>
           {loading ? (

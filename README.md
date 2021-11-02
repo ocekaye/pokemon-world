@@ -19,7 +19,14 @@ Collection of pokemon data. includes types, abilities, etc.
 ```JSON
 ...,
 "tailwindCSS.experimental.classRegex": [
-    "tw`([^`]*)",
-    ["classnames\\(([^)]*)\\)", "'([^']*)'"]
-  ]
+    "tw`([^`]*)", // tw`...`
+    "tw=\"([^\"]*)", // <div tw="..." />
+    "tw={\"([^\"}]*)", // <div tw={"..."} />
+    "tw\\.\\w+`([^`]*)", // tw.xxx`...`
+    "tw\\(.*?\\)`([^`]*)" // tw(Component)`...`
+  ],
+"tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  }
 ```

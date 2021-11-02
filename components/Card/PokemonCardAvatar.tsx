@@ -10,21 +10,30 @@ w-full
 aspect-w-6
 aspect-h-3
 mt-2
+self-center
 `}
   ${({ half }) => half && tw`w-1/2`}
 `;
 
-const Image = styled.img(tw`
-w-full h-full`);
+const Image = styled.img`
+  ${tw`w-full h-full`}
+  ${({ hasLink }) =>
+    hasLink && tw`md:transition md:hover:scale-125 md:cursor-pointer`}
+`;
 
 interface AvatarProps {
   imageUrl: string;
   half: boolean;
+  onAvatarClick?: Function;
 }
 export default function PokemonCardAvatar(props: AvatarProps) {
   return (
     <PokemonAvatarStyled half={props.half}>
-      <Image src={props.imageUrl} />
+      <Image
+        src={props.imageUrl}
+        onClick={props.onAvatarClick}
+        hasLink={!!props.onAvatarClick}
+      />
     </PokemonAvatarStyled>
   );
 }

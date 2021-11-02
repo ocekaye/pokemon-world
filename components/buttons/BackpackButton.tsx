@@ -2,7 +2,6 @@ import tw from "twin.macro";
 import styled from "@emotion/styled";
 import BackpackIcon from "~/icons/BackpackIcon";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 const BackpackButton = styled.div(tw`
 fixed 
@@ -11,8 +10,15 @@ right-0
 mb-2 mr-2 
 md:mb-4 md:mr-4 
 z-30 
-bg-red-500 
+bg-gradient-to-b
+from-pokemon-red
+via-pokemon-red
+to-white
+
 shadow-md 
+ring-4
+ring-gray-900
+ring-opacity-75
 rounded-full 
 p-3
 transition-all
