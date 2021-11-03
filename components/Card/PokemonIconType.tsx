@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { PokemonTypes } from "~/client/Pokemon";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
@@ -25,55 +24,53 @@ import Fairy from "~/icons/types/Fairy";
 import Unknown from "~/icons/types/Unknown";
 import Shadow from "~/icons/types/Shadow";
 
-interface WitchIconRe {
-  IconType: Component;
-  color: string;
-}
-const witchIcon = (value: PokemonTypes): WitchIconRe => {
+const witchIcon = (
+  value: PokemonTypes | string,
+  size: string | null
+): JSX.Element => {
   switch (value) {
     case PokemonTypes.flying:
-      return { IconType: Flaying, color: "#3B82F6" };
+      return <Flaying color="#3B82F6" size={size} />;
     case PokemonTypes.fighting:
-      return { IconType: Fighting, color: "#7F1D1D" };
+      return <Fighting color="#7F1D1D" size={size} />;
     case PokemonTypes.normal:
-      return { IconType: Normal, color: "#D1D5DB" };
+      return <Normal color="#D1D5DB" size={size} />;
     case PokemonTypes.poison:
-      return { IconType: Poison, color: "#047857" };
+      return <Poison color="#047857" size={size} />;
     case PokemonTypes.ground:
-      return { IconType: Ground, color: "#92400E" };
+      return <Ground color="#92400E" size={size} />;
     case PokemonTypes.rock:
-      return { IconType: Rock, color: "#374151" };
+      return <Rock color="#374151" size={size} />;
     case PokemonTypes.bug:
-      return { IconType: Bug, color: "#DB2777" };
+      return <Bug color="#DB2777" size={size} />;
     case PokemonTypes.ghost:
-      return { IconType: Ghost, color: "#EEF2FF" };
+      return <Ghost color="#EEF2FF" size={size} />;
     case PokemonTypes.steel:
-      return { IconType: Steel, color: "#111827" };
+      return <Steel color="#111827" size={size} />;
     case PokemonTypes.fire:
-      return { IconType: Fire, color: "#DC2626" };
+      return <Steel color="#DC2626" size={size} />;
     case PokemonTypes.water:
-      return { IconType: Water, color: "#60A5FA" };
+      return <Water color="#60A5FA" size={size} />;
     case PokemonTypes.grass:
-      return { IconType: Grass, color: "#10B981" };
+      return <Grass color="#10B981" size={size} />;
     case PokemonTypes.electric:
-      return { IconType: Electric, color: "#FBBF24" };
+      return <Electric color="#FBBF24" size={size} />;
     case PokemonTypes.psychic:
-      return { IconType: Psychic, color: "#111827" };
+      return <Psychic color="#111827" size={size} />;
     case PokemonTypes.ice:
-      return { IconType: Ice, color: "#DBEAFE" };
+      return <Ice color="#DBEAFE" size={size} />;
     case PokemonTypes.dragon:
-      return { IconType: Dragon, color: "#111827" };
+      return <Dragon color="#111827" size={size} />;
     case PokemonTypes.dark:
-      return { IconType: Dark, color: "#111827" };
+      return <Dark color="#111827" size={size} />;
     case PokemonTypes.fairy:
-      return { IconType: Fairy, color: "#1E40AF" };
+      return <Fairy color="#1E40AF" size={size} />;
     case PokemonTypes.unknown:
-      return { IconType: Unknown, color: "#8B5CF6" };
+      return <Unknown color="#8B5CF6" size={size} />;
     case PokemonTypes.shadow:
-      return { IconType: Shadow, color: "#374151" };
-
+      return <Shadow color="#D1D5DB" size={size} />;
     default:
-      return { IconType: Normal, color: "#D1D5DB" };
+      return <Normal color="#D1D5DB" size={size} />;
   }
 };
 
@@ -83,13 +80,8 @@ const Icon = styled.div(tw`
 
 interface PokemonIconTypeProps {
   iconProps: IconProps;
-  type: PokemonTypes;
+  type: PokemonTypes | string;
 }
 export default function PokemonIconType(props: PokemonIconTypeProps) {
-  const { IconType, color } = witchIcon(props.type);
-  return (
-    <Icon>
-      <IconType color={color} size={props.iconProps.size} />
-    </Icon>
-  );
+  return <Icon>{witchIcon(props.type, props.iconProps.size)}</Icon>;
 }

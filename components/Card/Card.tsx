@@ -2,7 +2,7 @@ import { FC } from "react";
 import tw from "twin.macro";
 import styled from "@emotion/styled";
 
-const PokemonItemStyled = styled.div`
+const PokemonItemStyled = styled.div<PokemonProps>`
   ${tw`
 flex
 relative
@@ -18,12 +18,20 @@ transform`}
   ${({ canClick }) => canClick && tw`cursor-pointer`}
 `;
 
+interface PokemonProps {
+  canClick: boolean;
+}
 interface CardProps {
   onCardClick?: Function;
 }
 const Card: FC<CardProps> = ({ children, onCardClick }) => {
   return (
-    <PokemonItemStyled onClick={onCardClick} canClick={!!onCardClick}>
+    <PokemonItemStyled
+      onClick={() => {
+        onCardClick?.();
+      }}
+      canClick={!!onCardClick}
+    >
       {children}
     </PokemonItemStyled>
   );

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { NextPage } from "next";
+
 import Head from "next/head";
 import tw, { styled } from "twin.macro";
 import { MyPokemon, IPokemon } from "~/Db";
@@ -14,7 +14,7 @@ const GridContainter = styled.div(
   lg:grid-cols-5 lg:gap-4
   xl:grid-cols-6`
 );
-export default function Backpack(): NextPage {
+export default function Backpack() {
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
   useEffect(() => {
     getPokemons();

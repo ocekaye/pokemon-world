@@ -1,4 +1,6 @@
-import { IPokemon, PokemonDb, db } from "~/Db/PokomonDb";
+import { IPokemon as MyIPokemon, db } from "~/Db/PokomonDb";
 import MyPokemon from "~/Db/MyPokemons";
 
-export { IPokemon, PokemonDb, db, MyPokemon };
+export interface IPokemon extends MyIPokemon {}
+
+export { db, MyPokemon };

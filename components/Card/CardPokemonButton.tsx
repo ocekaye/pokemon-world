@@ -16,7 +16,11 @@ interface PokeButtonProps {
 export default function CardPokemonButton(props: PokeButtonProps) {
   return (
     <PokeContainer>
-      <PokeButton onClick={props.save}>
+      <PokeButton
+        onClick={() => {
+          props.save?.();
+        }}
+      >
         <PokemonIcon size="50px" />
       </PokeButton>
     </PokeContainer>

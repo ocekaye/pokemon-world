@@ -1,34 +1,35 @@
 import { gql } from "@apollo/client";
+import { StatsObject } from "~/helpers/PokemonHelpers";
 const limit = 20;
 
-interface PokemonsResponse {
+export interface PokemonsResponse {
   data: PokemonsData;
 }
 
-interface PokemonsData {
+export interface PokemonsData {
   pokemons: PokemonsType;
 }
 
-interface PokemonsType {
+export interface PokemonsType {
   count: number;
   results: PokemonItem[];
 }
-interface PokemonItem {
+export interface PokemonItem {
   url: string;
   name: string;
   image: string;
   dreamworld: string;
 }
 
-interface PokemonDetailResponse {
+export interface PokemonDetailResponse {
   data: PokemonDetailData;
 }
 
-interface PokemonDetailData {
+export interface PokemonDetailData {
   pokemon: PokemonDetailItem;
 }
 
-interface PokemonDetailItem {
+export interface PokemonDetailItem {
   id: number;
   name: string;
   weight: number;
@@ -36,34 +37,44 @@ interface PokemonDetailItem {
   types: PokemonDetailTypes[];
   abilities: PokemonDetailAbilities[];
   stats: PokemonDetailStats[];
+  moves: PokemonMoves[];
 }
 
-interface PokemonDetailTypes {
-  interface: PokemonDetailType;
+export interface PokemonDetailTypes {
+  type: PokemonDetailType;
 }
 
-interface PokemonDetailType {
+export interface PokemonDetailType {
   name: string;
 }
 
-interface PokemonDetailAbilities {
+export interface PokemonDetailAbilities {
   ability: PokemonDetailAbilitiy;
 }
 
-interface PokemonDetailAbilitiy {
+export interface PokemonDetailAbilitiy {
   name: string;
 }
 
-interface PokemonDetailStats {
+export interface PokemonDetailStats {
   base_stat: number;
   stat: PokemonDetailStat;
 }
 
-interface PokemonDetailStat {
+export interface PokemonDetailStat {
   name: string;
 }
 
-enum PokemonTypes {
+export interface PokemonMoves {
+  move: PokemonMove;
+}
+
+export interface PokemonMove {
+  name: string;
+}
+
+export enum PokemonTypes {
+  loading = "loading",
   normal = "normal",
   fighting = "fighting",
   flying = "flying",
@@ -121,24 +132,28 @@ const getPokemonByName = gql`
           name
         }
       }
+      moves {
+        move {
+          name
+        }
+      }
       weight
       height
     }
   }
 `;
 
-export {
-  getPokemons,
-  getPokemonByName,
-  limit,
-  PokemonsType,
-  PokemonsData,
-  PokemonsResponse,
-  PokemonItem,
-  PokemonTypes,
-  PokemonDetailData,
-  PokemonDetailTypes,
-  PokemonDetailStats,
-  PokemonDetailAbilities,
-  PokemonDetailItem,
-};
+const getPokemonMoves = gql`
+  query pokemon($name: String!) {
+    pokemon(name: $name) {
+      name
+      moves {
+        move {
+          name
+        }
+      }
+    }
+  }
+`;
+
+export { getPokemons, getPokemonByName, getPokemonMoves, limit };

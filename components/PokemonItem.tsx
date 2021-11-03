@@ -5,6 +5,7 @@ import {
   PokemonDetailData,
   PokemonTypes,
   PokemonDetailTypes,
+  PokemonDetailStats,
 } from "~/client/Pokemon";
 import { useLazyQuery } from "@apollo/client";
 import { upperFirst } from "lodash";
@@ -39,14 +40,12 @@ export default function PokemonItem(props: PokemonItemProps) {
   const iconTypeSize = "16px";
   const router = useRouter();
   const [hasData, setUseData] = useState<Boolean>(!!props.pokemonData);
-  const [stats, setStats] = useState<StatsObject>(
-    props.pokemonData?.stats || {
-      hp: 0,
-      attack: 0,
-      defense: 0,
-      speed: 0,
-    }
-  );
+  const [stats, setStats] = useState<StatsObject>({
+    hp: 0,
+    attack: 0,
+    defense: 0,
+    speed: 0,
+  });
 
   const [getPokemon, { loading, error, data }] = useLazyQuery<
     PokemonDetailData,
@@ -57,6 +56,10 @@ export default function PokemonItem(props: PokemonItemProps) {
 
   useEffect(() => {
     if (!hasData) getPokemon();
+    else {
+      const sts = createStatusObject(props.pokemonData?.stats);
+      setStats(sts);
+    }
   }, []);
 
   useEffect(() => {
@@ -67,13 +70,15 @@ export default function PokemonItem(props: PokemonItemProps) {
   }, [data]);
 
   const hasDataTypes = (): Boolean => {
-    return (
-      data?.pokemon?.types?.length > 0 || props.pokemonData?.types.length > 0
-    );
+    return !!data?.pokemon || !!props.pokemonData;
   };
 
   const getDataTypes = (): PokemonDetailTypes[] => {
     return data?.pokemon?.types || props.pokemonData?.types || [];
+  };
+
+  const getDataStats = (): PokemonDetailStats[] => {
+    return data?.pokemon?.stats || props.pokemonData?.stats || [];
   };
 
   const getName = () => props.pokemon?.name || props.pokemonData?.name;
@@ -84,34 +89,34 @@ export default function PokemonItem(props: PokemonItemProps) {
     });
   };
 
+  const getTypeName = () => {
+    const td = data?.pokemon.types[0].type.name;
+    const pd = props.pokemonData?.types[0]?.type.name;
+    return loading ? PokemonTypes.loading : td || pd || PokemonTypes.unknown;
+  };
+
   const save = () => {
     if (!data?.pokemon) return;
 
     const a = MyPokemon.fromPokemon(
       "POKEMONKUUU" + Math.random() * 10000,
-      props.pokemon.dreamworld,
+      props.pokemon?.dreamworld || "",
       data.pokemon,
-      stats
+      getDataStats()
     );
     a.save();
   };
 
   return (
     <Card onCardClick={props.onItemClick}>
-      <CardBackground
-        type={
-          !loading && (data?.pokemon?.types?.length > 0 || hasData)
-            ? data?.pokemon?.types[0]?.type.name ||
-              props.pokemonData?.types[0]?.type.name ||
-              PokemonTypes.unknown
-            : null
-        }
-      />
+      <CardBackground type={getTypeName()} />
       <CardContent>
         <CardTitle>{upperFirst(getName())}</CardTitle>
         <HealthPoint maxHealth={stats.hp} curentHealth={stats.hp} />
         <CardAvatar
-          imageUrl={props.pokemon?.dreamworld || props.pokemonData?.dreamworld}
+          imageUrl={
+            props.pokemon?.dreamworld || props.pokemonData?.dreamworld || ""
+          }
           half
           onAvatarClick={onAvatarClick}
         />

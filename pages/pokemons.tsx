@@ -59,7 +59,7 @@ export default function Pokemons(props: PokemonsProp) {
 
   useEffect(() => {
     setCurrentPage((prevPage) => {
-      const newPage = parseInt(router.query.page || 0);
+      const newPage = parseInt(router.query.page + "" || "0");
       if (newPage != props.page) getData();
       return newPage;
     });
@@ -124,14 +124,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const data: PokemonsResponse = await client.query({
     query: getPokemons,
-    variables: { limit, offset: parseInt(query.page || 0) * limit },
+    variables: { limit, offset: parseInt(query.page + "" || "0") * limit },
   });
 
   return {
     props: {
       pokemons: data.data.pokemons.results || [],
       count: data.data.pokemons.count,
-      page: parseInt(query.page || 0),
+      page: parseInt(`${query.page}`),
     },
   };
 };

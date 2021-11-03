@@ -1,3 +1,4 @@
+import { createContext } from "react";
 import { PokemonDetailStats } from "~/client/Pokemon";
 
 enum STATUS {
@@ -7,7 +8,7 @@ enum STATUS {
   SPEED = "speed",
 }
 
-interface StatsObject {
+export interface StatsObject {
   hp: number;
   attack: number;
   defense: number;
@@ -26,6 +27,7 @@ const createStatusObject = (stats: PokemonDetailStats[] = []): StatsObject => {
   const attack = getStatsValue(stats, STATUS.ATTACK);
   const defense = getStatsValue(stats, STATUS.DEFENCE);
   const speed = getStatsValue(stats, STATUS.SPEED);
+
   return {
     hp,
     attack,
@@ -34,4 +36,4 @@ const createStatusObject = (stats: PokemonDetailStats[] = []): StatsObject => {
   };
 };
 
-export { getStatsValue, STATUS, StatsObject, createStatusObject };
+export { getStatsValue, STATUS, createStatusObject };

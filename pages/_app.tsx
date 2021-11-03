@@ -2,7 +2,8 @@ import Head from "next/head";
 import { GlobalStyles } from "twin.macro";
 import { ApolloProvider } from "@apollo/client";
 import client from "~/client";
-function App({ Component, pageProps }) {
+import type { AppProps /*, AppContext */ } from "next/app";
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>

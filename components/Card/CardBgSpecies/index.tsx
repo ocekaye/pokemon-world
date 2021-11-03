@@ -21,7 +21,7 @@ import Fairy from "~/components/Card/CardBgSpecies/Fairy";
 import Unknown from "~/components/Card/CardBgSpecies/Unknown";
 import Shadow from "~/components/Card/CardBgSpecies/Shadow";
 interface BackgroundSpeciesProps {
-  type: PokemonType;
+  type: PokemonTypes | string;
 }
 
 export default function CardBackgroundSpecies(props: BackgroundSpeciesProps) {

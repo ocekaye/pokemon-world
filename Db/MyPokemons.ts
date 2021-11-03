@@ -5,6 +5,7 @@ import {
   PokemonDetailTypes,
   PokemonDetailAbilities,
   PokemonDetailStats,
+  PokemonMoves,
 } from "~/client/Pokemon";
 export default class MyPokemon implements IPokemon {
   pokeName: string;
@@ -15,17 +16,18 @@ export default class MyPokemon implements IPokemon {
   height: number;
   types: PokemonDetailTypes[];
   abilities: PokemonDetailAbilities[];
-  stats: StatsObject[];
+  stats: PokemonDetailStats[];
+  moves: PokemonMoves[];
   constructor(
     pokeName: string,
     dreamworld: string,
-    id: string,
+    id: number,
     name: string,
-    weight: string,
-    height: string,
+    weight: number,
+    height: number,
     types: PokemonDetailTypes[],
     abilities: PokemonDetailAbilities[],
-    stats: StatsObject[]
+    stats: PokemonDetailStats[]
   ) {
     this.pokeName = pokeName;
     this.dreamworld = dreamworld;
@@ -36,13 +38,14 @@ export default class MyPokemon implements IPokemon {
     this.types = types;
     this.abilities = abilities;
     this.stats = stats;
+    this.moves = [];
   }
 
   static fromPokemon(
     pokeName: string,
     dreamworld: string,
     pokemon: PokemonDetailItem,
-    stats: StatsObject[]
+    stats: PokemonDetailStats[]
   ): MyPokemon {
     return new MyPokemon(
       pokeName,
@@ -71,7 +74,7 @@ export default class MyPokemon implements IPokemon {
     );
   }
 
-  static async getAll(): IPokemon[] {
+  static async getAll(): Promise<IPokemon[]> {
     const poke = await db.pokemon.toArray();
     return poke;
   }

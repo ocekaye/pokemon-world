@@ -25,7 +25,7 @@ transition-all
 hover:scale-110
 cursor-pointer
 `);
-interface BackpackProps extends LinkProps {
+interface BackpackProps {
   url: string;
   size?: string;
 }
