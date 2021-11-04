@@ -31,6 +31,7 @@ interface ImageProps {
 
 interface AvatarProps {
   imageUrl: string;
+  name: string;
   half: boolean;
   onAvatarClick?: Function;
 }
@@ -43,6 +44,7 @@ export default function PokemonCardAvatar(props: AvatarProps) {
           props.onAvatarClick?.();
         }}
         hasLink={!!props.onAvatarClick}
+        alt={props.name}
       />
     </PokemonAvatarStyled>
   );

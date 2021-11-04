@@ -39,7 +39,6 @@ export interface PokemonDetailItem {
   types: PokemonDetailTypes[];
   abilities: PokemonDetailAbilities[];
   stats: PokemonDetailStats[];
-  moves: PokemonMoves[];
 }
 
 export interface PokemonDetailTypes {
@@ -65,6 +64,10 @@ export interface PokemonDetailStats {
 
 export interface PokemonDetailStat {
   name: string;
+}
+
+export interface PokemonDetailMoves {
+  pokemon: { name: string; moves: PokemonMoves[] };
 }
 
 export interface PokemonMoves {
@@ -131,11 +134,6 @@ const getPokemonByName = gql`
       stats {
         base_stat
         stat {
-          name
-        }
-      }
-      moves {
-        move {
           name
         }
       }

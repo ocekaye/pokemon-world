@@ -8,7 +8,10 @@ import { useLazyQuery } from "@apollo/client";
 import {
   getDreamworldById,
   getPokemonByName,
+  getPokemonMoves,
   PokemonDetailData,
+  PokemonDetailMoves,
+  PokemonMoves,
 } from "~/client/Pokemon";
 import { upperFirst } from "lodash";
 import {
@@ -18,6 +21,7 @@ import {
   CardAvatar,
   CardContentType,
   PokemonIconType,
+  CardPokemonButton,
 } from "~/components/Card";
 import {
   DetailContainer,
@@ -36,23 +40,36 @@ import {
 
 const Container = styled.main(tw`
     flex
+    relative
     min-h-screen
     max-w-full
     min-w-full
+    pb-16
     
 `);
 const Header = styled.div(tw`flex flex-col h-screen w-screen justify-center`);
 const Title = styled.span(tw`text-4xl font-bold text-center`);
+const Footer = styled.div(tw`fixed w-full flex justify-center bottom-4`);
 const Home: NextPage = () => {
   const pokeContext = useContext(PokemonContex);
   const router = useRouter();
   const [pokemon, setPokemon] = useState<IPokemon | null>(pokeContext.pokemon);
+  const [moves, setMove] = useState<PokemonMoves[] | null>(null);
+
   const [getPokemon, { loading, error, data }] = useLazyQuery<
     PokemonDetailData,
     any
   >(getPokemonByName, {
     variables: { name: router.query.pokeName || "" },
   });
+
+  const [getMoves, eventMove] = useLazyQuery<PokemonDetailMoves, any>(
+    getPokemonMoves,
+    {
+      variables: { name: router.query.pokeName || "" },
+    }
+  );
+
   const [statsObject, setStatsObject] = useState<StatsObject>(
     pokeContext.pokemon
       ? createStatusObject(pokeContext.pokemon.stats)
@@ -66,6 +83,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!pokemon) getPokemon();
+    if (!moves) getMoves();
   }, []);
 
   useEffect(() => {
@@ -78,7 +96,6 @@ const Home: NextPage = () => {
         height: data.pokemon.height,
         weight: data.pokemon.weight,
         abilities: data.pokemon.abilities,
-        moves: data.pokemon.moves,
         stats: data.pokemon.stats,
         types: data.pokemon.types,
       });
@@ -86,10 +103,23 @@ const Home: NextPage = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (eventMove.data?.pokemon.moves)
+      setMove(eventMove?.data?.pokemon.moves || null);
+  }, [eventMove]);
+
   const getTypes = () => {
     return pokemon?.types && pokemon.types.length > 0
       ? pokemon.types[0].type.name
       : "loading";
+  };
+
+  const goPlaygroundPage = () => {
+    if (pokemon) router.push(`/playground`, `/playground`, { scroll: true });
+  };
+
+  const changePokemonContextValue = () => {
+    if (pokeContext.pokemon == null) pokeContext.change(pokemon);
   };
 
   return (
@@ -104,7 +134,11 @@ const Home: NextPage = () => {
           <DetailChar>
             <CardTitle>{upperFirst(router.query.pokeName + "")}</CardTitle>
             <HealthPoint maxHealth={100} curentHealth={100} />
-            <CardAvatar imageUrl={pokemon?.dreamworld || ""} half />
+            <CardAvatar
+              imageUrl={pokemon?.dreamworld || ""}
+              half
+              name={pokemon?.name || "Pokemon"}
+            />
             <CardContentType>
               {pokemon?.types ? (
                 pokemon.types.map((pkm) => {
@@ -135,12 +169,15 @@ const Home: NextPage = () => {
             />
             <DetailChips
               title="Moves"
-              chips={pokemon?.moves.map((move) => move.move.name) || []}
+              chips={moves ? moves.map((move) => move.move.name) || [] : []}
               chipFor={CHIP.MOVE}
             />
           </DetailInfo>
         </DetailContainer>
       </Container>
+      <Footer>
+        <CardPokemonButton onButtonClick={goPlaygroundPage} />
+      </Footer>
     </Fragment>
   );
 };

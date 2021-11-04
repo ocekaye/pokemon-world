@@ -85,7 +85,19 @@ export default function PokemonItem(props: PokemonItemProps) {
 
   const getName = () => props.pokemon?.name || props.pokemonData?.name;
 
+  const goPlaygroundPage = () => {
+    if (loading) return;
+    changePokemonContextValue();
+    router.push(`/playground`, `/playground`);
+  };
+
   const onAvatarClick = () => {
+    if (loading) return;
+    changePokemonContextValue();
+    router.push(`/pokemon/${getName()}`, `/pokemon/${getName()}`);
+  };
+
+  const changePokemonContextValue = () => {
     pokemonContext.change(
       props.pokemonData || {
         name: props.pokemon?.name || "",
@@ -95,32 +107,16 @@ export default function PokemonItem(props: PokemonItemProps) {
         weight: data?.pokemon.weight || 0,
         pokeName: "",
         abilities: data?.pokemon.abilities || [],
-        moves: data?.pokemon.moves || [],
         stats: data?.pokemon.stats || [],
         types: data?.pokemon.types || [],
       }
     );
-    router.push(`/pokemon/${getName()}`, `/pokemon/${getName()}`, {
-      scroll: true,
-    });
   };
 
   const getTypeName = () => {
     const td = data?.pokemon.types[0].type.name;
     const pd = props.pokemonData?.types[0]?.type.name;
     return loading ? PokemonTypes.loading : td || pd || PokemonTypes.unknown;
-  };
-
-  const save = () => {
-    if (!data?.pokemon) return;
-
-    const a = MyPokemon.fromPokemon(
-      "POKEMONKUUU" + Math.random() * 10000,
-      props.pokemon?.dreamworld || "",
-      data.pokemon,
-      getDataStats()
-    );
-    a.save();
   };
 
   return (
@@ -135,6 +131,7 @@ export default function PokemonItem(props: PokemonItemProps) {
           }
           half
           onAvatarClick={onAvatarClick}
+          name={props.pokemon?.name || props.pokemonData?.name || "Pokemon"}
         />
         <CardContentType>
           {loading ? (
@@ -159,7 +156,9 @@ export default function PokemonItem(props: PokemonItemProps) {
         <CardAbility
           abilities={data?.pokemon?.abilities || props.pokemonData?.abilities}
         />
-        {hasData ? null : <CardPokemonButton save={save} />}
+        {hasData ? null : (
+          <CardPokemonButton onButtonClick={goPlaygroundPage} />
+        )}
       </CardContent>
     </Card>
   );
