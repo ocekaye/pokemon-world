@@ -12,6 +12,9 @@ module.exports = {
           blue: "#1C4CBD ",
         },
       },
+      rotate: {
+        360: "360deg",
+      },
     },
   },
   variants: {
