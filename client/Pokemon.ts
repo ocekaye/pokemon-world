@@ -1,7 +1,9 @@
 import { gql } from "@apollo/client";
 import { StatsObject } from "~/helpers/PokemonHelpers";
 const limit = 20;
-
+export const getDreamworldById = (id: number): string => {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
+};
 export interface PokemonsResponse {
   data: PokemonsData;
 }

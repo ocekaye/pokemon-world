@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   PokemonItem as PokeItem,
   getPokemonByName,
@@ -14,6 +14,7 @@ import {
   STATUS,
   createStatusObject,
   StatsObject,
+  PokemonContex,
 } from "~/helpers/PokemonHelpers";
 import {
   Card,
@@ -54,6 +55,7 @@ export default function PokemonItem(props: PokemonItemProps) {
     variables: { name: props.pokemon?.name || "" },
   });
 
+  const pokemonContext = useContext(PokemonContex);
   useEffect(() => {
     if (!hasData) getPokemon();
     else {
@@ -84,6 +86,20 @@ export default function PokemonItem(props: PokemonItemProps) {
   const getName = () => props.pokemon?.name || props.pokemonData?.name;
 
   const onAvatarClick = () => {
+    pokemonContext.change(
+      props.pokemonData || {
+        name: props.pokemon?.name || "",
+        dreamworld: props.pokemon?.dreamworld || "",
+        id: data?.pokemon.id || 0,
+        height: data?.pokemon.height || 0,
+        weight: data?.pokemon.weight || 0,
+        pokeName: "",
+        abilities: data?.pokemon.abilities || [],
+        moves: data?.pokemon.moves || [],
+        stats: data?.pokemon.stats || [],
+        types: data?.pokemon.types || [],
+      }
+    );
     router.push(`/pokemon/${getName()}`, `/pokemon/${getName()}`, {
       scroll: true,
     });

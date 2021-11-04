@@ -1,5 +1,16 @@
 import { createContext } from "react";
 import { PokemonDetailStats } from "~/client/Pokemon";
+import { IPokemon } from "~/Db";
+
+export interface IPokemonContext {
+  pokemon: IPokemon | null;
+  change: Function;
+}
+
+export const PokemonContex = createContext<IPokemonContext>({
+  pokemon: null,
+  change: (pokemon: IPokemon | null) => {},
+});
 
 enum STATUS {
   HP = "hp",
