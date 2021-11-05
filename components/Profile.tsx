@@ -2,7 +2,7 @@ import tw, { styled } from "twin.macro";
 import Information from "~/components/Informations";
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import { addBall } from "~/Db";
 import { IHome } from "~/pages";
 import MainCharIcon from "~/icons/MainCharIcon";
 import MapIcon from "~/icons/MapIcon";
@@ -75,6 +75,7 @@ export default function Profile(props: IHome) {
   const router = useRouter();
 
   const goExplore = () => {
+    addBall();
     router.push("/pokemons", "/pokemons");
   };
 

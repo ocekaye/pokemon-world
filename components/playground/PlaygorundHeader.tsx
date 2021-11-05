@@ -35,7 +35,11 @@ const PokeOwnedImage = styled.img(tw`
   w-5 h-5
 `);
 
-export default function PlaygorundHeader() {
+interface PlaygroundProps {
+  ball: number;
+  owned: number;
+}
+export default function PlaygorundHeader(props: PlaygroundProps) {
   return (
     <Container>
       <ProfileContainer>
@@ -48,11 +52,11 @@ export default function PlaygorundHeader() {
         <PokeIcon>
           <PokemonIcon />
         </PokeIcon>
-        <PokeText>100 balls</PokeText>
+        <PokeText>{props.ball} balls</PokeText>
       </ProfileContainer>
       <ProfileContainer>
         <PokeOwnedImage src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg" />
-        <PokeText>3 owned</PokeText>
+        <PokeText>{props.owned} owned</PokeText>
       </ProfileContainer>
     </Container>
   );

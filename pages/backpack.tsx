@@ -16,6 +16,7 @@ const GridContainter = styled.div(
   grid grid-cols-2
   gap-2
   px-2 pt-2
+  mt-16
   sm:grid-cols-3 sm:gap-2 sm:px-3 sm:pt-3
   md:grid-cols-4 md:gap-3 md:px-4 md:pt-4
   lg:grid-cols-5 lg:gap-4

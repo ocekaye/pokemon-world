@@ -17,6 +17,7 @@ import ProfileButton from "~/components/buttons/ProfileButton";
 import NextIcon from "~/icons/NextIcon";
 import PrevIcon from "~/icons/PrevIcon";
 import { dummyPokeitems } from "~/helpers/dummy";
+import { addBall } from "~/Db";
 
 interface PokemonsProp {
   pokemons: PokeItem[];
@@ -90,6 +91,7 @@ export default function Pokemons(props: PokemonsProp) {
   };
 
   const changeUrl = (newPage: number) => {
+    addBall();
     cleanCurrent();
     router.push(`/pokemons/?page=${newPage}`, `/pokemons/?page=${newPage}`, {
       shallow: true,

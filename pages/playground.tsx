@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect, useContext } from "react";
 import MyPokemon from "~/Db/MyPokemons";
+import { addBall, countBall, subtractBall } from "~/Db";
 import { PokemonContex } from "~/helpers/PokemonHelpers";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -154,6 +155,29 @@ const Home: NextPage = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [newName, setName] = useState<string>("");
   const [isNameExist, setIsNameExist] = useState(false);
+  const [owned, setOwned] = useState<number>(0);
+  const [balls, setBalls] = useState<number>(0);
+  const [isBallOutOfStock, setIsOutOfStock] = useState(false);
+  let timer: NodeJS.Timeout;
+
+  useEffect(() => {
+    countOwned();
+    getBall();
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const countOwned = async () => {
+    if (!pokemon) return;
+    const have = await MyPokemon.countByPokemonName(pokemon.name);
+    setOwned(have);
+  };
+
+  const getBall = () => {
+    const ba = countBall();
+    setBalls(ba);
+  };
 
   const getType = () =>
     (pokemon?.types.length || []) > 0 ? pokemon?.types[0].type.name : "normal";
@@ -162,8 +186,14 @@ const Home: NextPage = () => {
 
   const Catch = () => {
     if (isClicked) return;
+    if (balls < 1) {
+      setIsOutOfStock(true);
+      return;
+    }
     setClicked(true);
-    setTimeout(() => {
+    subtractBall();
+    getBall();
+    timer = setTimeout(() => {
       Cathing();
     }, 3500);
   };
@@ -233,7 +263,7 @@ const Home: NextPage = () => {
       <Container>
         <CardBackground type={getType() || "normal"} />
         <Header>
-          <PlaygorundHeader />
+          <PlaygorundHeader owned={owned} ball={balls} />
         </Header>
 
         <PokemonContainer>
@@ -299,6 +329,16 @@ const Home: NextPage = () => {
             )}
           </ModalFooter>
         </ModalContainer>
+      </Modal>
+      <Modal
+        open={isBallOutOfStock}
+        onClose={() => {
+          setIsOutOfStock(false);
+        }}
+      >
+        <ModalContent>
+          Ball out of stock, please go explore to catch ball
+        </ModalContent>
       </Modal>
     </Fragment>
   );
