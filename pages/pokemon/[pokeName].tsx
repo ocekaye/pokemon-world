@@ -59,6 +59,7 @@ const Home: NextPage = () => {
   const router = useRouter();
   const [pokemon, setPokemon] = useState<IPokemon | null>(pokeContext.pokemon);
   const [moves, setMove] = useState<PokemonMoves[] | null>(null);
+  const [owned, setOwned] = useState<number>(0);
 
   const [getPokemon, { loading, error, data }] = useLazyQuery<
     PokemonDetailData,
@@ -88,6 +89,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!pokemon) getPokemon();
     if (!moves) getMoves();
+    countCowned();
   }, []);
 
   useEffect(() => {
@@ -111,6 +113,11 @@ const Home: NextPage = () => {
     if (eventMove.data?.pokemon.moves)
       setMove(eventMove?.data?.pokemon.moves || null);
   }, [eventMove]);
+
+  const countCowned = async () => {
+    const n = await MyPokemon.countByPokemonName(router.query.pokeName + "");
+    setOwned(n);
+  };
 
   const getTypes = () => {
     return pokemon?.types && pokemon.types.length > 0
@@ -144,8 +151,8 @@ const Home: NextPage = () => {
         <DetailContainer>
           <DetailChar>
             <CardTitle>
-              {upperFirst(router.query.pokeName)}
-              {` (${0} owned)`}
+              {upperFirst(router.query.pokeName + "")}
+              {` (${owned} owned)`}
             </CardTitle>
             <HealthPoint maxHealth={100} curentHealth={100} />
             <CardAvatar
