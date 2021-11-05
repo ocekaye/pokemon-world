@@ -2,16 +2,17 @@ import Dexie from "dexie";
 import { PokemonDetailItem } from "~/client/Pokemon";
 
 class PokemonDb extends Dexie {
-  pokemon: Dexie.Table<IPokemon, number>;
-  pokeMoves: Dexie.Table<IPokeMoves, number>;
+  pokemons: Dexie.Table<IPokemon, string>;
   constructor() {
     super("PokemonDb");
-    this.version(2).stores({
-      pokemons: "pokeName,id,name,weight,height,*types,*abilities,*stats",
-      pokeMoves: "owner,*moves",
-    });
-    this.pokemon = this.table("pokemons");
-    this.pokeMoves = this.table("pokeMoves");
+    this.version(4)
+      .stores({
+        pokemons: "pokeName,id,name,weight,height,*types,*abilities,*stats",
+      })
+      .upgrade((tx) => {
+        return tx.table("pokemons").clear();
+      });
+    this.pokemons = this.table("pokemons");
   }
 }
 
@@ -26,5 +27,3 @@ export interface IPokeMoves {
 }
 
 export const db = new PokemonDb();
-
-// export { db };

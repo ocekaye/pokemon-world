@@ -9,6 +9,7 @@ import HealthPoint from "~/components/Card/HealthPoint";
 import CardStats from "~/components/Card/CardStats";
 import CardAbility from "~/components/Card/CardAbility";
 import CardPokemonButton from "~/components/Card/CardPokemonButton";
+import CardDeleteButton from "~/components/Card/CardDeleteButton";
 
 export {
   Card,
@@ -22,4 +23,5 @@ export {
   CardStats,
   CardAbility,
   CardPokemonButton,
+  CardDeleteButton,
 };

@@ -1,6 +1,9 @@
 # POKEMON WORD
 Collection of pokemon data. includes types, abilities, etc.
 
+## Live Preview
+<a href="https://pokemon-world-theta.vercel.app/">See here</a>
+
 ## Requirement
 - Node `v14.16.0` or higer
 - it's better to use VsCode to make development easier

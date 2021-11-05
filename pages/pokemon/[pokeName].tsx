@@ -37,6 +37,7 @@ import {
   createStatusObject,
   StatsObject,
 } from "~/helpers/PokemonHelpers";
+import BackButton from "~/components/buttons/BackButton";
 
 const Container = styled.main(tw`
     flex
@@ -50,11 +51,15 @@ const Container = styled.main(tw`
 const Header = styled.div(tw`flex flex-col h-screen w-screen justify-center`);
 const Title = styled.span(tw`text-4xl font-bold text-center`);
 const Footer = styled.div(tw`fixed w-full flex justify-center bottom-4`);
+const ButtonBack = styled.div(tw`
+  flex fixed left-4 bottom-3 transition-all hover:scale-125 self-center
+`);
 const Home: NextPage = () => {
   const pokeContext = useContext(PokemonContex);
   const router = useRouter();
   const [pokemon, setPokemon] = useState<IPokemon | null>(pokeContext.pokemon);
   const [moves, setMove] = useState<PokemonMoves[] | null>(null);
+  const [owned, setOwned] = useState<number>(0);
 
   const [getPokemon, { loading, error, data }] = useLazyQuery<
     PokemonDetailData,
@@ -87,6 +92,10 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    countOwned();
+  }, [router.query]);
+
+  useEffect(() => {
     if (data?.pokemon) {
       setPokemon({
         pokeName: "",
@@ -108,6 +117,11 @@ const Home: NextPage = () => {
       setMove(eventMove?.data?.pokemon.moves || null);
   }, [eventMove]);
 
+  const countOwned = async () => {
+    const n = await MyPokemon.countByPokemonName(router.query.pokeName + "");
+    setOwned(n);
+  };
+
   const getTypes = () => {
     return pokemon?.types && pokemon.types.length > 0
       ? pokemon.types[0].type.name
@@ -115,11 +129,18 @@ const Home: NextPage = () => {
   };
 
   const goPlaygroundPage = () => {
-    if (pokemon) router.push(`/playground`, `/playground`, { scroll: true });
+    if (pokemon) {
+      changePokemonContextValue();
+      router.push(`/playground`, `/playground`, { scroll: true });
+    }
   };
 
   const changePokemonContextValue = () => {
     if (pokeContext.pokemon == null) pokeContext.change(pokemon);
+  };
+
+  const back = () => {
+    router.back();
   };
 
   return (
@@ -132,7 +153,14 @@ const Home: NextPage = () => {
         <CardBackground type={getTypes()} />
         <DetailContainer>
           <DetailChar>
-            <CardTitle>{upperFirst(router.query.pokeName + "")}</CardTitle>
+            <CardTitle>
+              {upperFirst(router.query.pokeName + "")}
+              {` (${
+                (pokemon?.pokeName || "").length > 0
+                  ? pokemon?.pokeName
+                  : owned + " owned"
+              })`}
+            </CardTitle>
             <HealthPoint maxHealth={100} curentHealth={100} />
             <CardAvatar
               imageUrl={pokemon?.dreamworld || ""}
@@ -144,6 +172,7 @@ const Home: NextPage = () => {
                 pokemon.types.map((pkm) => {
                   return (
                     <PokemonIconType
+                      key={pkm.type.name}
                       type={pkm.type.name}
                       iconProps={{ size: "30px" }}
                     />
@@ -176,7 +205,12 @@ const Home: NextPage = () => {
         </DetailContainer>
       </Container>
       <Footer>
-        <CardPokemonButton onButtonClick={goPlaygroundPage} />
+        <ButtonBack>
+          <BackButton onClick={back} />
+        </ButtonBack>
+        {(pokemon?.pokeName || "").length > 0 ? null : (
+          <CardPokemonButton onButtonClick={goPlaygroundPage} />
+        )}
       </Footer>
     </Fragment>
   );

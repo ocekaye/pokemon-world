@@ -5,11 +5,12 @@ import { IPokemon } from "~/Db";
 export interface IPokemonContext {
   pokemon: IPokemon | null;
   change: Function;
+  fromBackpack?: boolean;
 }
 
 export const PokemonContex = createContext<IPokemonContext>({
   pokemon: null,
-  change: (pokemon: IPokemon | null) => {},
+  change: (pokemon: IPokemon | null, fromBackpack?: boolean) => {},
 });
 
 enum STATUS {

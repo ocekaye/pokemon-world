@@ -26,7 +26,7 @@ import Shadow from "~/icons/types/Shadow";
 
 const witchIcon = (
   value: PokemonTypes | string,
-  size: string | null
+  size?: string | undefined | null
 ): JSX.Element => {
   switch (value) {
     case PokemonTypes.flying:
@@ -79,9 +79,9 @@ const Icon = styled.div(tw`
     `);
 
 interface PokemonIconTypeProps {
-  iconProps: IconProps;
+  iconProps?: IconProps;
   type: PokemonTypes | string;
 }
 export default function PokemonIconType(props: PokemonIconTypeProps) {
-  return <Icon>{witchIcon(props.type, props.iconProps.size)}</Icon>;
+  return <Icon>{witchIcon(props.type, props.iconProps?.size)}</Icon>;
 }
