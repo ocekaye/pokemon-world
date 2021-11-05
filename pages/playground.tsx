@@ -152,7 +152,7 @@ export interface IHome {
   account: string | null;
 }
 
-const Home: NextPage = ({ account }) => {
+const Home: NextPage<IHome> = ({ account }) => {
   const router = useRouter();
   const pokemonContext = useContext(PokemonContex);
   const [pokemon, setPokemon] = useState(pokemonContext.pokemon);
@@ -269,7 +269,11 @@ const Home: NextPage = ({ account }) => {
       <Container>
         <CardBackground type={getType() || "normal"} />
         <Header>
-          <PlaygorundHeader owned={owned} ball={balls} character={account} />
+          <PlaygorundHeader
+            owned={owned}
+            ball={balls}
+            character={account || "Main Character"}
+          />
         </Header>
 
         <PokemonContainer>
