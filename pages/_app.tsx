@@ -8,8 +8,10 @@ import { PokemonContex } from "~/helpers/PokemonHelpers";
 import { IPokemon } from "~/Db";
 function App({ Component, pageProps }: AppProps) {
   const [pokemonDetail, setPokemonDetail] = useState<IPokemon | null>(null);
-  const changePokemon = (pokemon: IPokemon) => {
+  const [fromBackpack, setFromBackpack] = useState<boolean | undefined>(false);
+  const changePokemon = (pokemon: IPokemon, fromBackpack?: boolean) => {
     setPokemonDetail(pokemon);
+    setFromBackpack(fromBackpack);
   };
   return (
     <>
@@ -19,7 +21,11 @@ function App({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <ApolloProvider client={client}>
         <PokemonContex.Provider
-          value={{ pokemon: pokemonDetail, change: changePokemon }}
+          value={{
+            pokemon: pokemonDetail,
+            change: changePokemon,
+            fromBackpack: fromBackpack,
+          }}
         >
           <Component {...pageProps} />
         </PokemonContex.Provider>

@@ -89,8 +89,11 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!pokemon) getPokemon();
     if (!moves) getMoves();
-    countCowned();
   }, []);
+
+  useEffect(() => {
+    countOwned();
+  }, [router.query]);
 
   useEffect(() => {
     if (data?.pokemon) {
@@ -114,7 +117,7 @@ const Home: NextPage = () => {
       setMove(eventMove?.data?.pokemon.moves || null);
   }, [eventMove]);
 
-  const countCowned = async () => {
+  const countOwned = async () => {
     const n = await MyPokemon.countByPokemonName(router.query.pokeName + "");
     setOwned(n);
   };
@@ -152,7 +155,11 @@ const Home: NextPage = () => {
           <DetailChar>
             <CardTitle>
               {upperFirst(router.query.pokeName + "")}
-              {` (${owned} owned)`}
+              {` (${
+                (pokemon?.pokeName || "").length > 0
+                  ? pokemon?.pokeName
+                  : owned + " owned"
+              })`}
             </CardTitle>
             <HealthPoint maxHealth={100} curentHealth={100} />
             <CardAvatar
@@ -200,7 +207,9 @@ const Home: NextPage = () => {
         <ButtonBack>
           <BackButton onClick={back} />
         </ButtonBack>
-        <CardPokemonButton onButtonClick={goPlaygroundPage} />
+        {(pokemon?.pokeName || "").length > 0 ? null : (
+          <CardPokemonButton onButtonClick={goPlaygroundPage} />
+        )}
       </Footer>
     </Fragment>
   );
