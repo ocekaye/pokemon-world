@@ -81,7 +81,7 @@ const ButtonGo = styled.div(tw`
 
 export default function Register() {
   const router = useRouter();
-  const [name, setName] = useState();
+  const [name, setName] = useState<string>("");
   const go = () => {
     if (name && name.length > 0) {
       cookieCutter.set("account", name);

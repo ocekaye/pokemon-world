@@ -26,8 +26,4 @@ export interface IPokeMoves {
   moves: string[];
 }
 
-export interface IAccount {
-  name;
-}
-
 export const db = new PokemonDb();
