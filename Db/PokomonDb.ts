@@ -2,7 +2,7 @@ import Dexie from "dexie";
 import { PokemonDetailItem } from "~/client/Pokemon";
 
 class PokemonDb extends Dexie {
-  pokemon: Dexie.Table<IPokemon, number>;
+  pokemons: Dexie.Table<IPokemon, number>;
   pokeMoves: Dexie.Table<IPokeMoves, number>;
   constructor() {
     super("PokemonDb");
@@ -14,7 +14,7 @@ class PokemonDb extends Dexie {
       .upgrade((tx) => {
         return tx.table("pokemons").clear();
       });
-    this.pokemon = this.table("pokemons");
+    this.pokemons = this.table("pokemons");
     this.pokeMoves = this.table("pokeMoves");
   }
 }
