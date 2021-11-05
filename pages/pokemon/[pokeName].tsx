@@ -172,6 +172,7 @@ const Home: NextPage = () => {
                 pokemon.types.map((pkm) => {
                   return (
                     <PokemonIconType
+                      key={pkm.type.name}
                       type={pkm.type.name}
                       iconProps={{ size: "30px" }}
                     />

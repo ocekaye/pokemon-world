@@ -51,6 +51,7 @@ export default function DetailChips(props: ChipsProps) {
       <ChipsStayled>
         {props.chips.map((chip) => (
           <Chip
+            key={chip}
             clicked={!!props.onChipClick}
             type={props.chipFor}
             onClick={() => {
