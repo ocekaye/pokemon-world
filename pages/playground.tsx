@@ -201,6 +201,7 @@ const Home: NextPage = () => {
       pokemon,
       pokemon.stats
     ).save();
+    setOpen(false);
     back();
   };
 

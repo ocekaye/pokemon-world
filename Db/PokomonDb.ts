@@ -2,7 +2,7 @@ import Dexie from "dexie";
 import { PokemonDetailItem } from "~/client/Pokemon";
 
 class PokemonDb extends Dexie {
-  pokemons: Dexie.Table<IPokemon, number>;
+  pokemons: Dexie.Table<IPokemon, string>;
   constructor() {
     super("PokemonDb");
     this.version(4)

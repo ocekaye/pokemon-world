@@ -87,6 +87,10 @@ export default class MyPokemon implements IPokemon {
     return await db.pokemons.where("name").equals(name).count();
   };
 
+  static deleteByName = async (name: string) => {
+    return await db.pokemons.delete(name);
+  };
+
   async save(): Promise<boolean> {
     return await db.transaction("rw", db.pokemons, async () => {
       return await db

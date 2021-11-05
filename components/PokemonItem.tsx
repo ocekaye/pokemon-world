@@ -28,6 +28,7 @@ import {
   CardStats,
   CardAbility,
   CardPokemonButton,
+  CardDeleteButton,
 } from "~/components/Card";
 import { MyPokemon, IPokemon } from "~/Db";
 import { useRouter } from "next/router";
@@ -37,6 +38,7 @@ interface PokemonItemProps {
   pokemon?: PokeItem;
   pokemonData?: IPokemon;
   onItemClick?: Function;
+  onDelete?: Function;
 }
 export default function PokemonItem(props: PokemonItemProps) {
   const iconTypeSize = "16px";
@@ -86,7 +88,12 @@ export default function PokemonItem(props: PokemonItemProps) {
     return data?.pokemon?.stats || props.pokemonData?.stats || [];
   };
 
-  const getName = () => props.pokemon?.name || props.pokemonData?.name;
+  const getName = (forUrl?: boolean) =>
+    forUrl
+      ? props.pokemon?.name || props.pokemonData?.name
+      : props.pokemonData?.pokeName ||
+        props.pokemon?.name ||
+        props.pokemonData?.name;
 
   const goPlaygroundPage = () => {
     if (loading) return;
@@ -97,7 +104,7 @@ export default function PokemonItem(props: PokemonItemProps) {
   const onAvatarClick = () => {
     if (loading) return;
     changePokemonContextValue();
-    router.push(`/pokemon/${getName()}`, `/pokemon/${getName()}`);
+    router.push(`/pokemon/${getName(true)}`, `/pokemon/${getName(true)}`);
   };
 
   const changePokemonContextValue = () => {
@@ -170,6 +177,7 @@ export default function PokemonItem(props: PokemonItemProps) {
           <CardPokemonButton onButtonClick={goPlaygroundPage} />
         )}
       </CardContent>
+      {hasData ? <CardDeleteButton onButtonClick={props.onDelete} /> : null}
     </Card>
   );
 }

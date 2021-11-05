@@ -18,5 +18,13 @@ export interface ModalContainerProps {
   children: JSX.Element | JSX.Element[] | undefined;
 }
 export default function ModalContainer(props: ModalContainerProps) {
-  return <ContainerStyled>{props.children}</ContainerStyled>;
+  return (
+    <ContainerStyled
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      {props.children}
+    </ContainerStyled>
+  );
 }

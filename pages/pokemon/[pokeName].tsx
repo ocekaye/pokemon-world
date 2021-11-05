@@ -52,7 +52,7 @@ const Header = styled.div(tw`flex flex-col h-screen w-screen justify-center`);
 const Title = styled.span(tw`text-4xl font-bold text-center`);
 const Footer = styled.div(tw`fixed w-full flex justify-center bottom-4`);
 const ButtonBack = styled.div(tw`
-  flex absolute left-4 transition-all hover:scale-125 self-center
+  flex fixed left-4 bottom-3 transition-all hover:scale-125 self-center
 `);
 const Home: NextPage = () => {
   const pokeContext = useContext(PokemonContex);
