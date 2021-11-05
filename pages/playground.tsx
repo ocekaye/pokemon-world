@@ -1,5 +1,7 @@
 import { Fragment, useState, useEffect, useContext } from "react";
 import MyPokemon from "~/Db/MyPokemons";
+import cookieCutter from "cookie-cutter";
+import Cookies from "cookies";
 import { addBall, countBall, subtractBall } from "~/Db";
 import { PokemonContex } from "~/helpers/PokemonHelpers";
 import type { NextPage } from "next";
@@ -146,7 +148,11 @@ const TextRunAway = styled.div(tw`
   text-lg font-bold text-center text-pink-800
 `);
 
-const Home: NextPage = () => {
+export interface IHome {
+  account: string | null;
+}
+
+const Home: NextPage = ({ account }) => {
   const router = useRouter();
   const pokemonContext = useContext(PokemonContex);
   const [pokemon, setPokemon] = useState(pokemonContext.pokemon);
@@ -263,7 +269,7 @@ const Home: NextPage = () => {
       <Container>
         <CardBackground type={getType() || "normal"} />
         <Header>
-          <PlaygorundHeader owned={owned} ball={balls} />
+          <PlaygorundHeader owned={owned} ball={balls} character={account} />
         </Header>
 
         <PokemonContainer>
@@ -342,6 +348,19 @@ const Home: NextPage = () => {
       </Modal>
     </Fragment>
   );
+};
+
+Home.getInitialProps = async ({ req, res }) => {
+  const isServer = !!req;
+  if (isServer) {
+    const cks = new Cookies(req, res);
+    return {
+      account: cks.get("account"),
+    };
+  } else
+    return {
+      account: cookieCutter.get("account"),
+    };
 };
 
 export default Home;

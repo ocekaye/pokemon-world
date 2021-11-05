@@ -38,6 +38,7 @@ const PokeOwnedImage = styled.img(tw`
 interface PlaygroundProps {
   ball: number;
   owned: number;
+  character: string;
 }
 export default function PlaygorundHeader(props: PlaygroundProps) {
   return (
@@ -46,7 +47,7 @@ export default function PlaygorundHeader(props: PlaygroundProps) {
         <ProfileImage>
           <MainCharHeadIcon />
         </ProfileImage>
-        <ProfileName>Main Character</ProfileName>
+        <ProfileName>{props.character}</ProfileName>
       </ProfileContainer>
       <ProfileContainer>
         <PokeIcon>
