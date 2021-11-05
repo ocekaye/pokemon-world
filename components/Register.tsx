@@ -1,5 +1,8 @@
 import tw, { styled } from "twin.macro";
 import Information from "~/components/Informations";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import cookieCutter from "cookie-cutter";
 
 const RegisterStyled = styled.div(tw`
     flex flex-col gap-2
@@ -77,6 +80,14 @@ const ButtonGo = styled.div(tw`
 `);
 
 export default function Register() {
+  const router = useRouter();
+  const [name, setName] = useState();
+  const go = () => {
+    if (name && name.length > 0) {
+      cookieCutter.set("account", name);
+      router.reload();
+    }
+  };
   return (
     <RegisterStyled>
       <Header>
@@ -85,8 +96,15 @@ export default function Register() {
       </Header>
       <Container>
         <InputInfo>Please input your name</InputInfo>
-        <InputName type="text" placeholder="Name" />
-        <ButtonGo>Let's Go!</ButtonGo>
+        <InputName
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => {
+            setName(e.currentTarget.value);
+          }}
+        />
+        <ButtonGo onClick={go}>Let's Go!</ButtonGo>
       </Container>
       <Information />
     </RegisterStyled>

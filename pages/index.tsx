@@ -6,6 +6,7 @@ import cookieCutter from "cookie-cutter";
 import Cookies from "cookies";
 
 import Register from "~/components/Register";
+import Profile from "~/components/Profile";
 
 const Container = styled.main`
   ${tw`container min-h-screen`}
@@ -13,13 +14,11 @@ const Container = styled.main`
 const Header = styled.div(tw`flex flex-col h-screen w-screen justify-center`);
 const Title = styled.span(tw`text-4xl font-bold text-center`);
 
-interface IHome {
+export interface IHome {
   account: string | null;
 }
 
 const Home: NextPage<IHome> = ({ account }) => {
-  console.log(account);
-
   return (
     <Fragment>
       <Head>
@@ -28,7 +27,9 @@ const Home: NextPage<IHome> = ({ account }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>{!account ? <Register /> : <span>YEAHOO</span>}</Container>
+      <Container>
+        {!account ? <Register /> : <Profile account={account} />}
+      </Container>
     </Fragment>
   );
 };

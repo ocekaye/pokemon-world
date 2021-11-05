@@ -5,7 +5,7 @@ class PokemonDb extends Dexie {
   pokemons: Dexie.Table<IPokemon, number>;
   constructor() {
     super("PokemonDb");
-    this.version(3)
+    this.version(4)
       .stores({
         pokemons: "pokeName,id,name,weight,height,*types,*abilities,*stats",
       })
@@ -13,7 +13,6 @@ class PokemonDb extends Dexie {
         return tx.table("pokemons").clear();
       });
     this.pokemons = this.table("pokemons");
-    this.pokeMoves = this.table("pokeMoves");
   }
 }
 
@@ -32,5 +31,3 @@ export interface IAccount {
 }
 
 export const db = new PokemonDb();
-
-// export { db };
