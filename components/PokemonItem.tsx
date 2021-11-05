@@ -98,16 +98,6 @@ export default function PokemonItem(props: PokemonItemProps) {
   };
 
   const changePokemonContextValue = () => {
-    console.log("====================");
-    console.log("props.pokemonData=====");
-    console.log(props.pokemonData);
-    console.log("====props.pokemonData");
-    console.log("props.pokemon========");
-    console.log(props.pokemon);
-
-    console.log("=======props.pokemon");
-    console.log("====================");
-
     pokemonContext.change(
       props.pokemonData || {
         name: props.pokemon?.name || "",
