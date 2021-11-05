@@ -115,7 +115,10 @@ const Home: NextPage = () => {
   };
 
   const goPlaygroundPage = () => {
-    if (pokemon) router.push(`/playground`, `/playground`, { scroll: true });
+    if (pokemon) {
+      changePokemonContextValue();
+      router.push(`/playground`, `/playground`, { scroll: true });
+    }
   };
 
   const changePokemonContextValue = () => {

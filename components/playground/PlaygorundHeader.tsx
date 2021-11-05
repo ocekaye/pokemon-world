@@ -48,7 +48,7 @@ export default function PlaygorundHeader() {
         <PokeIcon>
           <PokemonIcon />
         </PokeIcon>
-        <PokeText>100 ball</PokeText>
+        <PokeText>100 balls</PokeText>
       </ProfileContainer>
       <ProfileContainer>
         <PokeOwnedImage src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg" />

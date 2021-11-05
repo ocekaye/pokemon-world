@@ -78,10 +78,18 @@ export default class MyPokemon implements IPokemon {
     const poke = await db.pokemon.toArray();
     return poke;
   }
+  static async getByName(name: string): Promise<boolean> {
+    const poke = await db.pokemon.get({ pokeName: name });
+    return !!poke;
+  }
 
-  async save() {
-    await db.transaction("rw", db.pokemon, async () => {
-      await db.pokemon.add(MyPokemon.fromSelf(this));
+  async save(): boolean {
+    return await db.transaction("rw", db.pokemon, async () => {
+      return await db
+        .table("pokemons")
+        .add(MyPokemon.fromSelf(this))
+        .then(() => true)
+        .catch(() => false);
     });
   }
 }
