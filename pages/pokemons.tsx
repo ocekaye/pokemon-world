@@ -16,6 +16,7 @@ import BackpackButton from "~/components/buttons/BackpackButton";
 import ProfileButton from "~/components/buttons/ProfileButton";
 import NextIcon from "~/icons/NextIcon";
 import PrevIcon from "~/icons/PrevIcon";
+import { dummyPokeitems } from "~/helpers/dummy";
 
 interface PokemonsProp {
   pokemons: PokeItem[];
@@ -27,7 +28,7 @@ interface ILocationProps {
   page: number;
 }
 const LocationStyled = styled.div<ILocationProps>(({ page }) => [
-  tw`flex flex-col justify-center items-center pb-24
+  tw`flex flex-col justify-center items-center pb-24 min-h-screen
   bg-gradient-to-b from-pokemon-yellow  to-pokemon-red`,
   page % 5 == 0 && tw`from-pokemon-green  to-pokemon-red`,
   page % 5 == 1 && tw`from-blue-500  to-indigo-700`,
@@ -89,10 +90,15 @@ export default function Pokemons(props: PokemonsProp) {
   };
 
   const changeUrl = (newPage: number) => {
+    cleanCurrent();
     router.push(`/pokemons/?page=${newPage}`, `/pokemons/?page=${newPage}`, {
       shallow: true,
       scroll: true,
     });
+  };
+
+  const cleanCurrent = () => {
+    setPokemons(dummyPokeitems);
   };
 
   useEffect(() => {
@@ -123,8 +129,8 @@ export default function Pokemons(props: PokemonsProp) {
         </Header>
       </HeaderContainer>
       <GridContainter>
-        {pokemons.map((d) => (
-          <PokemonItem key={d.name} pokemon={d} />
+        {pokemons.map((d, i) => (
+          <PokemonItem key={d.name + i} pokemon={d} />
         ))}
       </GridContainter>
       <ProfileButton url="/" />

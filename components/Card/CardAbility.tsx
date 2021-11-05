@@ -17,8 +17,8 @@ export default function CardAbility(props: AbilityProps) {
   const { abilities = [] } = props;
   return (
     <CardAbilityContainer>
-      {abilities.map((ability) => (
-        <AbilityItem key={ability.ability.name}>
+      {abilities.map((ability, i) => (
+        <AbilityItem key={ability.ability.name + i}>
           {ability.ability.name}
         </AbilityItem>
       ))}

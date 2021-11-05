@@ -31,6 +31,7 @@ import {
 } from "~/components/Card";
 import { MyPokemon, IPokemon } from "~/Db";
 import { useRouter } from "next/router";
+import { dummyAbilities } from "~/helpers/dummy";
 
 interface PokemonItemProps {
   pokemon?: PokeItem;
@@ -57,10 +58,12 @@ export default function PokemonItem(props: PokemonItemProps) {
 
   const pokemonContext = useContext(PokemonContex);
   useEffect(() => {
-    if (!hasData) getPokemon();
-    else {
-      const sts = createStatusObject(props.pokemonData?.stats);
-      setStats(sts);
+    if (props.pokemon?.name != "__") {
+      if (!hasData) getPokemon();
+      else {
+        const sts = createStatusObject(props.pokemonData?.stats);
+        setStats(sts);
+      }
     }
   }, []);
 
@@ -114,6 +117,8 @@ export default function PokemonItem(props: PokemonItemProps) {
   };
 
   const getTypeName = () => {
+    if (props.pokemon?.name == "__") return PokemonTypes.loading;
+
     const td = data?.pokemon.types[0].type.name;
     const pd = props.pokemonData?.types[0]?.type.name;
     return loading ? PokemonTypes.loading : td || pd || PokemonTypes.unknown;
@@ -134,7 +139,7 @@ export default function PokemonItem(props: PokemonItemProps) {
           name={props.pokemon?.name || props.pokemonData?.name || "Pokemon"}
         />
         <CardContentType>
-          {loading ? (
+          {loading || props.pokemon?.name == "__" ? (
             <PokemonIconType type="normal" iconProps={{ size: iconTypeSize }} />
           ) : hasDataTypes() ? (
             getDataTypes().map((poke) => (
@@ -153,8 +158,13 @@ export default function PokemonItem(props: PokemonItemProps) {
           height={data?.pokemon?.height || props.pokemonData?.height || 0}
           weight={data?.pokemon?.weight || props.pokemonData?.weight || 0}
         />
+
         <CardAbility
-          abilities={data?.pokemon?.abilities || props.pokemonData?.abilities}
+          abilities={
+            data?.pokemon?.abilities ||
+            props.pokemonData?.abilities ||
+            dummyAbilities
+          }
         />
         {hasData ? null : (
           <CardPokemonButton onButtonClick={goPlaygroundPage} />
