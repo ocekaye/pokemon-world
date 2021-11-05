@@ -37,6 +37,7 @@ import {
   createStatusObject,
   StatsObject,
 } from "~/helpers/PokemonHelpers";
+import BackButton from "~/components/buttons/BackButton";
 
 const Container = styled.main(tw`
     flex
@@ -50,6 +51,9 @@ const Container = styled.main(tw`
 const Header = styled.div(tw`flex flex-col h-screen w-screen justify-center`);
 const Title = styled.span(tw`text-4xl font-bold text-center`);
 const Footer = styled.div(tw`fixed w-full flex justify-center bottom-4`);
+const ButtonBack = styled.div(tw`
+  flex absolute left-4 transition-all hover:scale-125 self-center
+`);
 const Home: NextPage = () => {
   const pokeContext = useContext(PokemonContex);
   const router = useRouter();
@@ -125,6 +129,10 @@ const Home: NextPage = () => {
     if (pokeContext.pokemon == null) pokeContext.change(pokemon);
   };
 
+  const back = () => {
+    router.back();
+  };
+
   return (
     <Fragment>
       <Head>
@@ -135,7 +143,10 @@ const Home: NextPage = () => {
         <CardBackground type={getTypes()} />
         <DetailContainer>
           <DetailChar>
-            <CardTitle>{upperFirst(router.query.pokeName + "")}</CardTitle>
+            <CardTitle>
+              {upperFirst(router.query.pokeName)}
+              {` (${0} owned)`}
+            </CardTitle>
             <HealthPoint maxHealth={100} curentHealth={100} />
             <CardAvatar
               imageUrl={pokemon?.dreamworld || ""}
@@ -179,6 +190,9 @@ const Home: NextPage = () => {
         </DetailContainer>
       </Container>
       <Footer>
+        <ButtonBack>
+          <BackButton onClick={back} />
+        </ButtonBack>
         <CardPokemonButton onButtonClick={goPlaygroundPage} />
       </Footer>
     </Fragment>
